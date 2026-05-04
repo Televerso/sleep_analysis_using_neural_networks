@@ -1,14 +1,14 @@
 import os
-
 import numpy as np
-import cv2
+
 import src.utils.basic_functions.BasicFunctions as bf
+from decord import VideoReader
 from yaml import load, dump
 from yaml import Loader, Dumper
 
 from src.video_processing.input_reader.Reader import Reader
 
-class SimpleReader(Reader):
+class DecordReader(Reader):
     def __init__(self, path_from_project_root : str):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
 
@@ -23,79 +23,58 @@ class SimpleReader(Reader):
         self.__rotate_param = config_data['rotate']
 
         # Создается объект cap, проверка на успешное открытие файла
-        self.cap = cv2.VideoCapture(path_from_project_root)
-        if not self.cap.isOpened():
-            print("Error: Could not open video file.")
-            raise FileNotFoundError
-        else:
-            print("Video file opened successfully!")
+        self.vr = VideoReader(self.path_from_root, width=self.__width, height=self.__height)
+        print("Video file opened successfully!")
 
-        self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        self.curr_cap_frame = 0
+        self.frame_count = int(len(self.vr))
+        self.curr_vr_frame = 0
 
     def close(self):
-        # Закрывает объект видео
-        self.cap.release()
-        cv2.destroyAllWindows()
+        self.vr = None
 
-    def __set_cap_to_first_frame(self):
+    def __set_it_to_first_frame(self):
         """
         Устанавливает позицию текущего кадра на первый кадр видеоряда
         """
-        self.cap.set(1, 0)
-        self.curr_cap_frame = 0
+        self.curr_frame = 0
 
-    def __set_cap_to_last_frame(self):
+    def __set_it_to_last_frame(self):
         """
         Устанавливает позицию текущего кадра на последний кадр видеоряда
         """
-        self.cap.set(1, self.frame_count - 1)
-        self.curr_cap_frame = self.frame_count - 1
+        self.curr_frame = self.frame_count - 1
 
-    def __set_cap_to_n_frame(self, n : int):
+    def __set_it_to_n_frame(self, n : int):
         """
         Устанавливает позицию текущего кадра
         :param n: Номер кадра
         """
         if n<0 or n > self.frame_count:
             raise IndexError
-        self.cap.set(1, n)
-        self.curr_cap_frame = n
+        self.curr_frame = n
 
     def __read_one_frame(self) -> np.ndarray | None:
         """
         Считывает текущий кадр и переходит к следующему, заполняя внутренний список
         :return: Считанный кадр; None при ошибке чтения
         """
-        ret, frame = self.cap.read()
-        if ret:
-            frame = bf.resize(frame, self.__height, self.__width)
-            self.curr_cap_frame += 1
+        frame = self.vr[self.curr_vr_frame].asnumpy()
+        if self.curr_vr_frame+1 >= self.frame_count:
+            self.curr_frame += 1
             return frame
         else:
             return None
 
     def read_all(self) -> list:
-        frame_list = list()
-        self.__set_cap_to_first_frame()
-
-        frame = self.__read_one_frame()
-        while frame is not None:
-            frame_list.append(frame)
-            frame = self.__read_one_frame()
-
+        frames = self.vr.get_batch(list(range(0, self.frame_count))).asnumpy()
+        frame_list = [i[:,:,::-1] for i in frames]
+        self.__set_it_to_last_frame()
         return frame_list
 
     def read_with_gap(self) -> list:
-        frame_list = list()
-        self.__set_cap_to_first_frame()
-
-        frame = self.__read_one_frame()
-        while frame is not None:
-            if self.curr_cap_frame % self.__gap == 0:
-                frame_list.append(frame)
-            frame = self.__read_one_frame()
-
+        frames = self.vr.get_batch(list(range(0,self.frame_count,self.__gap))).asnumpy()
+        frame_list = [i[:,:,::-1] for i in frames]
+        self.__set_it_to_last_frame()
         return frame_list
 
 

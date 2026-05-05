@@ -1,6 +1,7 @@
+import src.video_processing.input_reader.DecordReader as DecordReader
 import src.video_processing.input_reader.GearReader as GearReader
 import src.video_processing.input_reader.SimpleReader as SimpleReader
-import src.video_processing.input_reader.DecordReader as DecordReader
+
 
 def decord_read_all(path_to_file):
     reader = DecordReader.DecordReader(path_to_file)

@@ -2,8 +2,8 @@ import unittest
 
 import cv2
 import numpy as np
-
 from skimage.metrics import structural_similarity as ssim
+
 
 class TestImageListAssertions(unittest.TestCase):
     def assertImagesAsEqual(self, list1, list2, msg=None):

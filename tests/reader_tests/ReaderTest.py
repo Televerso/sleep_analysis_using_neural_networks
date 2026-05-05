@@ -2,8 +2,8 @@ import os
 import unittest
 
 import src.video_processing.input_reader.Reader as Reader
-
 from tests.test_utils.ImageListAssertions import TestImageListAssertions
+
 
 class ReaderTest(TestImageListAssertions):
 

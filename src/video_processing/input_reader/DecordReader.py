@@ -6,9 +6,9 @@ from decord import VideoReader
 from yaml import load, dump
 from yaml import Loader, Dumper
 
-from src.video_processing.input_reader.Reader import Reader
+from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
-class DecordReader(Reader):
+class DecordReader(ReaderInterface):
     def __init__(self, path_from_project_root : str):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
 
@@ -24,7 +24,6 @@ class DecordReader(Reader):
 
         # Создается объект cap, проверка на успешное открытие файла
         self.vr = VideoReader(self.path_from_root, width=self.__width, height=self.__height)
-        print("Video file opened successfully!")
 
         self.frame_count = int(len(self.vr))
         self.curr_vr_frame = 0

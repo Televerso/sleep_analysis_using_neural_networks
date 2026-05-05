@@ -10,13 +10,19 @@ if __name__ == '__main__':
     video_path = r"inputs\kesha\video.mp4"
     full_path = os.path.join(ROOT_DIR, video_path)
 
-    save_path = os.path.join(ROOT_DIR, r"outputs\kesha")
+    save_path = os.path.join(ROOT_DIR, r"outputs\kesha_gap")
 
-    # reader = SimpleReader(full_path)
-    reader = GearReader(full_path)
-    frames = reader.read_all()
-    save_frames(save_path, frames)
+    reader1 = SimpleReader(full_path)
+    # reader2 = GearReader(full_path)
+    reader3 = DecordReader(video_path)
 
-    reader.close()
+    frames1 = reader1.read_with_gap()
+    frames3 = reader3.read_with_gap()
+
+    save_frames(save_path+'1', frames1)
+    save_frames(save_path + '3', frames3)
+
+    reader1.close()
+    reader3.close()
 
 

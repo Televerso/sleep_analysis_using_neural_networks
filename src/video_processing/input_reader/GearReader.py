@@ -1,15 +1,17 @@
 import os
 import numpy as np
 
-import src.utils.basic_functions.BasicFunctions as bf
 from vidgear.gears import CamGear
 import cv2
+from threading import Lock
 from yaml import load, dump
 from yaml import Loader, Dumper
 
-from src.video_processing.input_reader.Reader import Reader
+from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
-class GearReader(Reader):
+import src.utils.basic_functions.BasicFunctions as bf
+
+class GearReader(ReaderInterface):
     def __init__(self, path_from_project_root: str):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
 
@@ -29,14 +31,13 @@ class GearReader(Reader):
             "CAP_PROP_FRAME_HEIGHT": self.__height,
         }
         self.stream = CamGear(self.path_from_root, **options).start()
-        print("Video file opened successfully!")
 
         self.frame_count = int(self.stream.stream.get(cv2.CAP_PROP_FRAME_COUNT))
+        self.__lock = Lock()
         self.curr_cap_frame = 0
 
     def close(self):
         # Закрывает объект видео
-        cv2.destroyAllWindows()
         self.stream.stop()
 
 
@@ -44,15 +45,17 @@ class GearReader(Reader):
         """
         Устанавливает позицию текущего кадра на первый кадр видеоряда
         """
-        self.stream.stream.set(cv2.CAP_PROP_POS_FRAMES, 0)
-        self.curr_cap_frame = 0
+        with self.__lock:
+            self.stream.stream.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            self.curr_cap_frame = 0
 
     def __set_cap_to_last_frame(self):
         """
         Устанавливает позицию текущего кадра на последний кадр видеоряда
         """
-        self.stream.stream.set(cv2.CAP_PROP_POS_FRAMES, self.frame_count-1)
-        self.curr_cap_frame = self.frame_count - 1
+        with self.__lock:
+            self.stream.stream.set(cv2.CAP_PROP_POS_FRAMES, self.frame_count-1)
+            self.curr_cap_frame = self.frame_count - 1
 
     def __set_cap_to_n_frame(self, n: int):
         """
@@ -61,8 +64,9 @@ class GearReader(Reader):
         """
         if n < 0 or n > self.frame_count:
             raise IndexError
-        self.stream.stream.set(cv2.CAP_PROP_POS_FRAMES, n)
-        self.curr_cap_frame = n
+        with self.__lock:
+            self.stream.stream.set(cv2.CAP_PROP_POS_FRAMES, n)
+            self.curr_cap_frame = n
 
     def __read_one_frame(self) -> np.ndarray | None:
         """
@@ -70,30 +74,45 @@ class GearReader(Reader):
         :return: Считанный кадр; None при ошибке чтения
         """
         frame = self.stream.read()
-        self.curr_cap_frame += 1
+        with self.__lock:
+            self.curr_cap_frame += 1
         return frame
 
     def read_all(self) -> list:
         frame_list = list()
 
-        frame = self.stream.read()
+        frame = self.__read_one_frame()
         while frame is not None:
             frame_list.append(frame)
-            self.curr_cap_frame += 1
-            frame = self.stream.read()
+            frame = self.__read_one_frame()
 
-        self.curr_cap_frame = self.frame_count - 1
+        self.__set_cap_to_last_frame()
+
+        with self.__lock:
+            for i in range(len(frame_list)):
+                frame_list[i] = bf.resize(frame_list[i], self.__height, self.__width)
         return frame_list
 
     def read_with_gap(self) -> list:
         frame_list = list()
 
-        frame = self.stream.read()
+        frame = self.__read_one_frame()
+        with self.__lock:
+            self.curr_cap_frame = 0
+
         while frame is not None:
-            if self.curr_cap_frame % self.__gap == 0:
+            with self.__lock:
+                curr_frame = self.curr_cap_frame
+                self.curr_cap_frame += 1
+
+            if curr_frame % self.__gap == 0:
                 frame_list.append(frame)
-            self.curr_cap_frame += 1
             frame = self.stream.read()
 
-        self.curr_cap_frame = self.frame_count - 1
+        self.__set_cap_to_last_frame()
+
+        with self.__lock:
+            for i in range(len(frame_list)):
+                frame_list[i] = bf.resize(frame_list[i], self.__height, self.__width)
+
         return frame_list

@@ -6,9 +6,9 @@ import src.utils.basic_functions.BasicFunctions as bf
 from yaml import load, dump
 from yaml import Loader, Dumper
 
-from src.video_processing.input_reader.Reader import Reader
+from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
-class SimpleReader(Reader):
+class SimpleReader(ReaderInterface):
     def __init__(self, path_from_project_root : str):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
 
@@ -25,10 +25,7 @@ class SimpleReader(Reader):
         # Создается объект cap, проверка на успешное открытие файла
         self.cap = cv2.VideoCapture(path_from_project_root)
         if not self.cap.isOpened():
-            print("Error: Could not open video file.")
             raise FileNotFoundError
-        else:
-            print("Video file opened successfully!")
 
         self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         self.curr_cap_frame = 0
@@ -91,10 +88,14 @@ class SimpleReader(Reader):
         self.__set_cap_to_first_frame()
 
         frame = self.__read_one_frame()
+        self.curr_cap_frame = 0
         while frame is not None:
             if self.curr_cap_frame % self.__gap == 0:
                 frame_list.append(frame)
+                print(self.curr_cap_frame)
             frame = self.__read_one_frame()
+
+
 
         return frame_list
 

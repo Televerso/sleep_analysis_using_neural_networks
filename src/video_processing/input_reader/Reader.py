@@ -1,16 +1,39 @@
-import abc
-from abc import ABC, abstractmethod
+import src.video_processing.input_reader.GearReader as GearReader
+import src.video_processing.input_reader.SimpleReader as SimpleReader
+import src.video_processing.input_reader.DecordReader as DecordReader
 
-class Reader(ABC):
-    @abstractmethod
-    def read_all(self):
-        raise NotImplementedError
+def decord_read_all(path_to_file):
+    reader = DecordReader.DecordReader(path_to_file)
+    frame_list = reader.read_all()
+    reader.close()
+    return frame_list
 
-    @abstractmethod
-    def read_with_gap(self):
-        raise NotImplementedError
+def decord_read_with_gap(path_to_file):
+    reader = DecordReader.DecordReader(path_to_file)
+    frame_list = reader.read_with_gap()
+    reader.close()
+    return frame_list
 
-    @abstractmethod
-    def close(self):
-        raise NotImplementedError
+def gear_read_all(path_to_file):
+    reader = GearReader.GearReader(path_to_file)
+    frame_list = reader.read_all()
+    reader.close()
+    return frame_list
 
+def gear_read_with_gap(path_to_file):
+    reader = GearReader.GearReader(path_to_file)
+    frame_list = reader.read_with_gap()
+    reader.close()
+    return frame_list
+
+def cv2_read_all(path_to_file):
+    reader = SimpleReader.SimpleReader(path_to_file)
+    frame_list = reader.read_all()
+    reader.close()
+    return frame_list
+
+def cv2_read_with_gap(path_to_file):
+    reader = SimpleReader.SimpleReader(path_to_file)
+    frame_list = reader.read_with_gap()
+    reader.close()
+    return frame_list

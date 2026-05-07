@@ -4,6 +4,7 @@ import src.video_processing.input_reader.DecordReader as DecordReader
 import src.video_processing.input_reader.RSVideoReader as RSVideoReader
 import src.video_processing.input_reader.MultiprocReader as MultiprocReader
 import src.video_processing.input_reader.MultiprocReaderSM as MultiprocReaderSM
+import src.video_processing.input_reader.PyAVReader as PyAVReader
 
 def decord_read_all(path_to_file):
     reader = DecordReader.DecordReader(path_to_file)
@@ -73,6 +74,18 @@ def mpsm_read_all(path_to_file):
 
 def mpsm_read_with_gap(path_to_file):
     reader = MultiprocReaderSM.MultiprocReaderSM(path_to_file)
+    frame_array = reader.read_with_gap()
+    reader.close()
+    return frame_array
+
+def pyav_read_all(path_to_file):
+    reader = PyAVReader.PyAVReader(path_to_file)
+    frame_array = reader.read_all()
+    reader.close()
+    return frame_array
+
+def pyav_read_with_gap(path_to_file):
+    reader = PyAVReader.PyAVReader(path_to_file)
     frame_array = reader.read_with_gap()
     reader.close()
     return frame_array

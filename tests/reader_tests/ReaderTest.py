@@ -38,6 +38,11 @@ class ReaderTest(TestImageListAssertions):
                                  Reader.mpsm_read_all(self.path_to_video),
                                  msg="simple reader and shared memory multiprocessing reader are nor equal!")
 
+    def test_reading_all_cv2_pyav(self):
+        self.assertImagesAsEqual(Reader.cv2_read_all(self.path_to_video),
+                                 Reader.pyav_read_all(self.path_to_video),
+                                 msg="simple reader and PyAV reader are nor equal!")
+
 
     def test_reading_with_gaps_cv2_decord(self):
         self.assertImagesAsEqual(Reader.cv2_read_with_gap(self.path_to_video),
@@ -63,6 +68,11 @@ class ReaderTest(TestImageListAssertions):
         self.assertImagesAsEqual(Reader.cv2_read_with_gap(self.path_to_video),
                                  Reader.mpsm_read_with_gap(self.path_to_video),
                                  msg="simple reader and multiprocessing reader are nor equal!")
+
+    def test_reading_with_gaps_cv2_pyav(self):
+        self.assertImagesAsEqual(Reader.cv2_read_with_gap(self.path_to_video),
+                                 Reader.pyav_read_with_gap(self.path_to_video),
+                                 msg="simple reader and PyAV reader are nor equal!")
 
 
 if __name__ == '__main__':

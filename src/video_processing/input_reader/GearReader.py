@@ -1,14 +1,15 @@
 import os
-from threading import Lock
+import numpy as np
 
-import cv2
 from vidgear.gears import CamGear
-from yaml import Loader
-from yaml import load
+import cv2
+from threading import Lock
+from yaml import load, dump
+from yaml import Loader, Dumper
 
-import src.utils.basic_functions.BasicFunctions as bf
 from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
+import src.utils.basic_functions.BasicFunctions as bf
 
 class GearReader(ReaderInterface):
     def __init__(self, path_from_project_root: str):
@@ -40,22 +41,19 @@ class GearReader(ReaderInterface):
         self.__stream.stop()
 
 
-    def read_all(self) -> list:
+    def read_all(self) -> np.ndarray:
         frame_list = list()
 
         frame = self.__stream.read()
         while frame is not None:
-            frame_list.append(frame)
+            frame_list.append(bf.resize(frame, self.__height, self.__width)[:,:,::-1].copy())
             frame = self.__stream.read()
 
-        with self.__lock:
-            for i in range(len(frame_list)):
-                frame_list[i] = bf.resize(frame_list[i], self.__height, self.__width)
 
-        return frame_list
+        return np.array(frame_list)
 
 
-    def read_with_gap(self) -> list:
+    def read_with_gap(self) -> np.ndarray:
         frame_list = list()
 
         frame = self.__stream.read()
@@ -66,11 +64,8 @@ class GearReader(ReaderInterface):
                 self.__curr_cap_frame += 1
 
             if curr_frame % self.__gap == 0:
-                frame_list.append(frame)
+                frame_list.append(bf.resize(frame, self.__height, self.__width)[:,:,::-1].copy())
             frame = self.__stream.read()
 
-        with self.__lock:
-            for i in range(len(frame_list)):
-                frame_list[i] = bf.resize(frame_list[i], self.__height, self.__width)
 
-        return frame_list
+        return np.array(frame_list)

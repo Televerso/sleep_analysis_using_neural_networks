@@ -1,8 +1,9 @@
 import os
 
-from src.utils.file_functions.save_frames import save_frames
 from src.video_processing.input_reader.DecordReader import DecordReader
 from src.video_processing.input_reader.SimpleReader import SimpleReader
+from src.video_processing.input_reader.GearReader import GearReader
+from src.utils.file_functions.save_frames import save_frames
 
 if __name__ == '__main__':
     ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
@@ -18,7 +19,7 @@ if __name__ == '__main__':
     frames1 = reader1.read_with_gap()
     frames3 = reader3.read_with_gap()
 
-    save_frames(save_path+'1', frames1)
+    save_frames(save_path + '1', frames1)
     save_frames(save_path + '3', frames3)
 
     reader1.close()

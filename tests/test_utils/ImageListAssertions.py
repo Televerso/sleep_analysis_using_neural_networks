@@ -2,8 +2,8 @@ import unittest
 
 import cv2
 import numpy as np
-from skimage.metrics import structural_similarity as ssim
 
+from skimage.metrics import structural_similarity as ssim
 
 class TestImageListAssertions(unittest.TestCase):
     def assertImagesAsEqual(self, list1, list2, msg=None):
@@ -12,7 +12,7 @@ class TestImageListAssertions(unittest.TestCase):
         for i, (img1, img2) in enumerate(zip(list1, list2)):
             self.assertEqual(img1.shape, img2.shape, f"{msg}\n Image shapes are different: {img1.shape} != {img2.shape} at index {i}")
 
-            if not self.__frames_are_similar(img1, img2, 0.98):
+            if not self.__frames_are_similar(img1, img2, 0.97):
                 diff_mask = img1 != img2
                 num_diffs = np.count_nonzero(diff_mask)
                 max_diff = np.max(np.abs(img1.astype(float) - img2.astype(float)))

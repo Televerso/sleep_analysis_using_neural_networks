@@ -1,13 +1,12 @@
 import os
 
-import cv2
 import numpy as np
-from yaml import Loader
-from yaml import load
-
+import cv2
 import src.utils.basic_functions.BasicFunctions as bf
-from src.video_processing.input_reader.ReaderInterface import ReaderInterface
+from yaml import load, dump
+from yaml import Loader, Dumper
 
+from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
 class SimpleReader(ReaderInterface):
     def __init__(self, path_from_project_root : str):
@@ -67,12 +66,12 @@ class SimpleReader(ReaderInterface):
         """
         ret, frame = self.__cap.read()
         if ret:
-            frame = bf.resize(frame, self.__height, self.__width)
+            frame = bf.resize(frame, self.__height, self.__width)[:,:,::-1].copy()
             return frame
         else:
             return None
 
-    def read_all(self) -> list:
+    def read_all(self) -> np.ndarray:
         frame_list = list()
         self.__set_cap_to_first_frame()
 
@@ -82,9 +81,9 @@ class SimpleReader(ReaderInterface):
             self.__curr_cap_frame += 1
             frame = self.__read_one_frame()
 
-        return frame_list
+        return np.array(frame_list)
 
-    def read_with_gap(self) -> list:
+    def read_with_gap(self) -> np.ndarray:
         frame_list = list()
         self.__set_cap_to_first_frame()
 
@@ -97,6 +96,6 @@ class SimpleReader(ReaderInterface):
 
 
 
-        return frame_list
+        return np.array(frame_list)
 
 

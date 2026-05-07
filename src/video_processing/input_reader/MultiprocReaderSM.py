@@ -21,40 +21,33 @@ def _worker_initializer(lock):
 class SharedOutputBuffer:
     def __init__(self, max_frames, height, width, channels=3):
         # Allocate for worst case
-        self.max_frames = max_frames
-        self.frame_size = height * width * channels
+        self.__max_frames = max_frames
+        self.__frame_size = height * width * channels
 
         # Shared memory for: [counter, padding..., frames...]
         # First 8 bytes: atomic counter of frames written
-        self.total_size = 8 + (max_frames * self.frame_size)
+        self.__total_size = 8 + (max_frames * self.__frame_size)
 
-        self.shm = shared_memory.SharedMemory(create=True, size=self.total_size)
-        self.counter = np.ndarray(1, dtype=np.int64, buffer=self.shm.buf[:8])
-        self.counter[0] = 0
-        # self._lock = Lock()
+        self._shm = shared_memory.SharedMemory(create=True, size=self.__total_size)
+        self._counter = np.ndarray(1, dtype=np.int64, buffer=self._shm.buf[:8])
+        self._counter[0] = 0
 
         # The frame buffer starts after the counter
-        self.frames = np.ndarray(
+        self._frames = np.ndarray(
             (max_frames, height, width, channels),
             dtype=np.uint8,
-            buffer=self.shm.buf[8:]
+            buffer=self._shm.buf[8:]
         )
 
-    # def write_frame(self, frame, index):
-    #     """Worker calls this to write a single frame atomically"""
-    #     with self._lock:  # You'll need to pass this to workers
-    #         current = self.counter[0]
-    #         self.frames[current] = frame
-    #         self.counter[0] = current + 1
 
     def get_results(self):
         """Parent calls this to get all collected frames"""
-        count = self.counter[0]
-        return self.frames[:count].copy()
+        count = self._counter[0]
+        return self._frames[:count].copy()
 
     def cleanup(self):
-        self.shm.close()
-        self.shm.unlink()
+        self._shm.close()
+        self._shm.unlink()
 
 
 class MultiprocReaderSM(ReaderInterface):
@@ -79,7 +72,7 @@ class MultiprocReaderSM(ReaderInterface):
         self.frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         cap.release()
 
-        self.max_frames = None
+        self.__max_frames = None
 
 
     def close(self):
@@ -94,7 +87,7 @@ class MultiprocReaderSM(ReaderInterface):
         shm = shared_memory.SharedMemory(name=shm_name)
         counter = np.ndarray((1,), dtype=np.int64, buffer=shm.buf[:8])
         frames = np.ndarray(
-            (self.max_frames, self.__height, self.__width, 3),
+            (self.__max_frames, self.__height, self.__width, 3),
             dtype=np.uint8,
             buffer=shm.buf[8:]
         )
@@ -123,7 +116,7 @@ class MultiprocReaderSM(ReaderInterface):
 
 
     def __run_reader(self, gap):
-        buffer = SharedOutputBuffer(self.max_frames, self.__height, self.__width, 3)
+        buffer = SharedOutputBuffer(self.__max_frames, self.__height, self.__width, 3)
 
         chunk_size = (self.frame_count // self.__num_threads)
         frame_chunks = [[i, i + chunk_size] for i in
@@ -145,7 +138,7 @@ class MultiprocReaderSM(ReaderInterface):
                         frame_chunks[i][1],
                         gap,
                         i,
-                        buffer.shm.name,
+                        buffer._shm.name,
                     )
                  for i in range(len(frame_chunks))
                 ]
@@ -156,9 +149,9 @@ class MultiprocReaderSM(ReaderInterface):
         return result
 
     def read_all(self):
-        self.max_frames = self.frame_count
+        self.__max_frames = self.frame_count
         return self.__run_reader(gap=1)
 
     def read_with_gap(self):
-        self.max_frames = 1 + self.frame_count // self.__gap
+        self.__max_frames = 1 + self.frame_count // self.__gap
         return self.__run_reader(gap=self.__gap)

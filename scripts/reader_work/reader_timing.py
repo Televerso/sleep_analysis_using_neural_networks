@@ -4,6 +4,9 @@ import src.video_processing.input_reader.Reader as Reader
 
 import time
 
+from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+
+
 def time_all(full_path):
     print("Tests for reading all frames: ")
 
@@ -98,10 +101,13 @@ def time_with_gap(full_path):
 if __name__ == '__main__':
     ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
     # video_path = r"inputs\test_sleeping_video\video.mp4"
-    video_path = r"inputs\huge_gameplay_video\video.mp4"
+    # video_path = r"inputs\huge_gameplay_video\video.mp4"
+    video_path = r"inputs\12h_test_video\video.mp4"
+    config_path = r"config\config.yml"
     full_path = os.path.join(ROOT_DIR, video_path)
+    config = ReaderConfig.from_yaml(os.path.join(ROOT_DIR, config_path))
 
-    time_all(full_path)
+    # time_all(full_path)
 
     time_with_gap(full_path)
 

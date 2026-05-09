@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-import src.utils.basic_functions.BasicFunctions as bf
+from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
 from decord import VideoReader
 from yaml import load, dump
 from yaml import Loader, Dumper
@@ -9,21 +9,20 @@ from yaml import Loader, Dumper
 from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
 class DecordReader(ReaderInterface):
-    def __init__(self, path_from_project_root : str):
+    def __init__(self, path_from_project_root : str, config : ReaderConfig):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
-
-        # Путь к видео из корневой директории
         self._path_from_root = os.path.join(ROOT_DIR, path_from_project_root)
 
-        # Считываются параметры из конфига
-        _config_data = load(open(os.path.join(ROOT_DIR, r"config\reader_config.yml"), 'r'), Loader=Loader)
-        self.__width = _config_data['width']
-        self.__height = _config_data['height']
-        self.__gap = _config_data['gap']
-        self.__rotate_param = _config_data['rotate']
+        self.__width = config.width
+        self.__height = config.height
+        self.__rotate_param = config.rotate
 
         # Создается объект cap, проверка на успешное открытие файла
         self.__vr = VideoReader(self._path_from_root, width=self.__width, height=self.__height)
+
+        self.__gap = int(round(self.__vr.get_avg_fps()) // config.fps)
+        if self.__gap < 1:
+            self.__gap = 1
 
         self.frame_count = int(len(self.__vr))
 
@@ -34,12 +33,10 @@ class DecordReader(ReaderInterface):
 
     def read_all(self) -> np.ndarray:
         frames = self.__vr.get_batch(list(range(0, self.frame_count))).asnumpy()
-        # frames = frames[..., ::-1].copy()
         return frames
 
     def read_with_gap(self) -> np.ndarray:
         frames = self.__vr.get_batch(list(range(0, self.frame_count, self.__gap))).asnumpy()
-        # frames = frames[..., ::-1].copy()
         return frames
 
 

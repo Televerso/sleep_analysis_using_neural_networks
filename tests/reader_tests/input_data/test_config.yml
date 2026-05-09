@@ -1,0 +1,5 @@
+video_reader:
+  width : 360
+  height : 240
+  fps : 10
+  rotate : 0

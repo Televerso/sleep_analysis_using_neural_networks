@@ -9,6 +9,7 @@ import src.utils.basic_functions.BasicFunctions as bf
 from yaml import load, dump
 from yaml import Loader, Dumper
 
+from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
 from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
 _worker_lock = None
@@ -51,25 +52,27 @@ class SharedOutputBuffer:
 
 
 class MultiprocReaderSM(ReaderInterface):
-    def __init__(self, path_from_project_root : str):
+    def __init__(self, path_from_project_root : str, config : ReaderConfig):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
         self.__num_threads = os.cpu_count()//2
 
         # Путь к видео из корневой директории
         self._path_from_root = os.path.join(ROOT_DIR, path_from_project_root)
 
-        # Считываются параметры из конфига
-        _config_data = load(open(os.path.join(ROOT_DIR, r"config\reader_config.yml"), 'r'), Loader=Loader)
-        self.__width = _config_data['width']
-        self.__height = _config_data['height']
-        self.__gap = _config_data['gap']
-        self.__rotate_param = _config_data['rotate']
+        self.__width = config.width
+        self.__height = config.height
+        self.__rotate_param = config.rotate
 
         # Создается объект cap, проверка на успешное открытие файла
         cap = cv2.VideoCapture(path_from_project_root)
         if not cap.isOpened():
             raise FileNotFoundError
         self.frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+        self.__gap = int(round(cap.get(cv2.CAP_PROP_FPS)) // config.fps)
+        if self.__gap < 1:
+            self.__gap = 1
+
         cap.release()
 
         self.__max_frames = None

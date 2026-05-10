@@ -1,10 +1,8 @@
 import os
 import numpy as np
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
 from decord import VideoReader
-from yaml import load, dump
-from yaml import Loader, Dumper
 
 from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 

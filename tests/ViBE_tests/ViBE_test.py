@@ -1,8 +1,8 @@
 import os
 import unittest
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
-from src.utils.file_functions.config_readers.ViBEConfig import ViBEConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ViBEConfig import ViBEConfig
 from src.video_processing.ViBE_extractor_native_py import ViBEWrapperNative
 from src.video_processing.ViBE_extractor_pybind import ViBEWrapperPybind
 from src.video_processing.input_reader import Reader

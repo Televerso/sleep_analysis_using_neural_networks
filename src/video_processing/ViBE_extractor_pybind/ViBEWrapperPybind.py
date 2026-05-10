@@ -1,7 +1,7 @@
 import VibeExtractor as ve
 import numpy as np
 
-from src.utils.file_functions.config_readers.ViBEConfig import ViBEConfig
+from src.utils.config_readers.ViBEConfig import ViBEConfig
 
 def process_frames_single_channel(frames : list, config : ViBEConfig):
     N = config.N

@@ -1,8 +1,7 @@
-import VibeExtractor as ve
 import os
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
-from src.utils.file_functions.config_readers.ViBEConfig import ViBEConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ViBEConfig import ViBEConfig
 from src.utils.file_functions.save_frames import save_frames
 from src.video_processing.input_reader.Reader import rsv_read_all
 import src.video_processing.ViBE_extractor_pybind.ViBEWrapperPybind as ViBEWrapper

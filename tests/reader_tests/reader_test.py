@@ -2,7 +2,7 @@ import os
 import unittest
 
 import src.video_processing.input_reader.Reader as Reader
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
 
 from tests.test_utils.ImageListAssertions import TestImageListAssertions
 

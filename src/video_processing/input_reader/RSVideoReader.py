@@ -1,12 +1,9 @@
 import os
 import numpy as np
 
-import src.utils.basic_functions.BasicFunctions as bf
 from video_reader import PyVideoReader
-from yaml import load, dump
-from yaml import Loader, Dumper
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
 class RSVideoReader(ReaderInterface):

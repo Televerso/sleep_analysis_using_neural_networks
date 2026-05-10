@@ -1,15 +1,11 @@
-import gc
 import os
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from multiprocessing import shared_memory, Lock, Pool
 
 import numpy as np
 import cv2
 import src.utils.basic_functions.BasicFunctions as bf
-from yaml import load, dump
-from yaml import Loader, Dumper
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
 _worker_lock = None

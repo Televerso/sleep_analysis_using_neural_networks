@@ -1,9 +1,8 @@
 import os
 import time
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
-from src.utils.file_functions.config_readers.ViBEConfig import ViBEConfig
-from src.utils.file_functions.save_frames import save_frames
+from src.utils.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ViBEConfig import ViBEConfig
 from src.video_processing.ViBE_extractor_pybind import ViBEWrapperPybind
 from src.video_processing.input_reader.Reader import rsv_read_all
 import src.video_processing.ViBE_extractor_native_py.ViBEWrapperNative as ViBEWrapperNative

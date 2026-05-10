@@ -4,10 +4,8 @@ import numpy as np
 from vidgear.gears import CamGear
 import cv2
 from threading import Lock
-from yaml import load, dump
-from yaml import Loader, Dumper
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.video_processing.input_reader.ReaderInterface import ReaderInterface
 
 import src.utils.basic_functions.BasicFunctions as bf

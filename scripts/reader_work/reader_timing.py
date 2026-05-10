@@ -4,7 +4,7 @@ import src.video_processing.input_reader.Reader as Reader
 
 import time
 
-from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+from src.utils.config_readers.ReaderConfig import ReaderConfig
 
 
 def time_all(full_path, config):

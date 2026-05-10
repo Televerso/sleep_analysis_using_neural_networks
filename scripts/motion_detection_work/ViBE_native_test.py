@@ -1,9 +1,10 @@
 import os
 
 from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
+from src.utils.file_functions.config_readers.ViBEConfig import ViBEConfig
 from src.utils.file_functions.save_frames import save_frames
 from src.video_processing.input_reader.Reader import rsv_read_all
-import src.video_processing.ViBE_extractor_native_py.vibe as vibe
+import src.video_processing.ViBE_extractor_native_py.ViBEWrapperNative as ViBEWrapper
 
 if __name__ == '__main__':
     N = 20
@@ -18,12 +19,10 @@ if __name__ == '__main__':
     config = ReaderConfig().from_yaml(os.path.join(ROOT_DIR, r'config\config.yml'))
 
     frames = rsv_read_all(video_path, config)
-    samples = vibe.initial_background(frames[-1,:,:,0], N)
 
-    out_frames = list()
-    for frame in frames:
-        segmap, samples = vibe.vibe_detection(frame[:,:,0], samples, _min, N, R)
-        out_frames.append(segmap)
+    config = ViBEConfig.from_yaml(os.path.join(ROOT_DIR, r'config\config.yml'))
+
+    out_frames = ViBEWrapper.process_frames_three_channels(frames, config)
 
     save_frames(output_path, out_frames)
 

@@ -6,7 +6,7 @@ from src.utils.file_functions.config_readers.ReaderConfig import ReaderConfig
 
 from tests.test_utils.ImageListAssertions import TestImageListAssertions
 
-class ReaderTest(TestImageListAssertions):
+class reader_test(TestImageListAssertions):
 
     def setUp(self):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]

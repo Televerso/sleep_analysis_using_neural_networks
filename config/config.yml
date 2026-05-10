@@ -3,3 +3,10 @@ video_reader:
   height : 180
   rotate : 0
   fps : 2
+
+vibe_motion_detector:
+  N : 20
+  R : 40
+  _min : 2
+  phi : 16
+

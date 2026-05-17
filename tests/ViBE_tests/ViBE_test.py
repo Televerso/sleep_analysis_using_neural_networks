@@ -19,7 +19,7 @@ class ViBE_test(TestMaskListAssertions):
 
     def test_vibe_single_channel(self):
         masks_native = vibe_extractor.native_process_single_channel(self.frames[:, :, :, 1], self.config)
-        masks_pybind = vibe_extractor.pybind_process_three_channels(self.frames[:, :, :, 1], self.config)
+        masks_pybind = vibe_extractor.pybind_process_single_channels(self.frames[:, :, :, 1], self.config)
         self.assertImagesAsEqual(masks_native, masks_pybind, msg="Error in reading for single channel, native and pybind implementations are not equal!")
 
     def test_vibe_three_channels(self):

@@ -3,20 +3,19 @@ import time
 
 from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.utils.config_readers.ViBEConfig import ViBEConfig
-from src.video_processing.ViBE_extractor_pybind import ViBEWrapperPybind
-from src.video_processing.input_reader.Reader import rsv_read_all
-import src.video_processing.ViBE_extractor_native_py.ViBEWrapperNative as ViBEWrapperNative
+from src.video_processing.input_reader.reader import rsv_read_all
 
+import src.video_processing.vibe_extractor.vibe_extractor as vibe_extractor
 
 def time_three_channels(frames, config):
     start = time.time()
-    ViBEWrapperNative.process_frames_three_channels(frames, config)
+    vibe_extractor.native_process_three_channels(frames, config)
     end = time.time()
     time_native = end - start
     print("Time for native python for three channels: ", time_native)
 
     start = time.time()
-    ViBEWrapperPybind.process_frames_three_channels(frames, config)
+    vibe_extractor.pybind_process_three_channels(frames, config)
     end = time.time()
     time_pybind = end - start
     print("Time for pybind for three channels: ", time_pybind)
@@ -26,13 +25,13 @@ def time_three_channels(frames, config):
 
 def time_single_channel(frames, config):
     start = time.time()
-    ViBEWrapperNative.process_frames_single_channel(frames, config)
+    vibe_extractor.native_process_single_channel(frames, config)
     end = time.time()
     time_native = end - start
     print("Time for native python for single channel: ", time_native)
 
     start = time.time()
-    ViBEWrapperPybind.process_frames_single_channel(frames, config)
+    vibe_extractor.pybind_process_single_channel(frames, config)
     end = time.time()
     time_pybind = end - start
     print("Time for pybind for single channel: ", time_pybind)

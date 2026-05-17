@@ -3,8 +3,8 @@ import os
 from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.utils.config_readers.ViBEConfig import ViBEConfig
 from src.utils.file_functions.save_frames import save_frames
-from src.video_processing.input_reader.Reader import rsv_read_all
-import src.video_processing.ViBE_extractor_native_py.ViBEWrapperNative as ViBEWrapper
+from src.video_processing.input_reader.reader import rsv_read_all
+import src.video_processing.vibe_extractor.vibe_extractor as vibe_extractor
 
 if __name__ == '__main__':
     N = 20
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     config = ViBEConfig.from_yaml(os.path.join(ROOT_DIR, r'config\config.yml'))
 
-    out_frames = ViBEWrapper.process_frames_three_channels(frames, config)
+    out_frames = vibe_extractor.native_process_three_channels(frames, config)
 
     save_frames(output_path, out_frames)
 

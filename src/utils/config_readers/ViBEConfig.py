@@ -5,8 +5,6 @@ import yaml
 
 @dataclass()
 class ViBEConfig:
-    __ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
-
     N: int = 20
     R: int = 400
     min: int = 2

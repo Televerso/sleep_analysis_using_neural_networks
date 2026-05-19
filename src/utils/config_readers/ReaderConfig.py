@@ -5,8 +5,6 @@ import yaml
 
 @dataclass()
 class ReaderConfig:
-    __ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
-
     fps: int = 60
     width: int = 320
     height: int = 240

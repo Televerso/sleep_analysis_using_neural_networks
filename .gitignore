@@ -1,6 +1,6 @@
 .idea/
 .venv/
-data/
+data/datasets/
 outputs/
 inputs/
 ffmpeg-8.1.1-essentials_build/

@@ -4,14 +4,15 @@ import os
 from torch.utils.data import DataLoader
 from torchinfo import summary
 
+
 class Trainer:
     def __init__(self,
-                 model : nn.Module,
-                 optimizer : torch.optim.Optimizer,
-                 loss_fn : nn.Module,
-                 device : str = None,
-                 out_dir : str = None,
-                 use_notebook : bool = False,):
+                 model: nn.Module,
+                 optimizer: torch.optim.Optimizer,
+                 loss_fn: nn.Module,
+                 device: str = None,
+                 out_dir: str = None,
+                 use_notebook: bool = False, ):
         self.device = device if device is not None else ("cuda" if torch.cuda.is_available() else "cpu")
 
         self.model = model
@@ -25,7 +26,7 @@ class Trainer:
 
         self.current_epoch = 0
         self.best_metric = - float('inf')
-        self.history = {'train_acc':[], 'train_loss': [], 'val_acc': [], 'val_loss': []}
+        self.history = {'train_acc': [], 'train_loss': [], 'val_acc': [], 'val_loss': []}
 
         if self.do_save:
             os.makedirs(self.out_dir, exist_ok=True)
@@ -129,7 +130,6 @@ class Trainer:
             'best_metric': self.best_metric,
             'history': self.history,
         }, filepath)
-
 
     def load_checkpoint(self, filepath: str):
         checkpoint = torch.load(filepath, map_location=self.device)

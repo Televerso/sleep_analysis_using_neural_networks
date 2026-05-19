@@ -36,7 +36,7 @@ def get_64pix_mask(image):
 
     if len(max_area_img) == 0 or len(max_area_img) > 5:
         image_64 = np.zeros((64, 64, 3), dtype=np.uint8)
-        return image_64
+        return cv2.cvtColor(image_64,cv2.COLOR_BGR2GRAY)
 
     x, y, w, h, s = stats[max_area_img[0]]
     cx, cy = x + w // 2, y + h // 2
@@ -68,7 +68,7 @@ def get_64pix_mask(image):
     rx = image.shape[1] - 1 if w+margin>image.shape[1] else w+margin
     ry = image.shape[0] - 1 if h+margin>image.shape[0] else h+margin
 
-    image_64 = np.zeros((64, 64, 3), dtype=np.uint8)
+    image_64 = np.zeros((64, 64), dtype=np.uint8)
     image_64 = cv2.resize(image[ly:ry,lx:rx],(64,64),interpolation=cv2.INTER_NEAREST)
 
-    return cv2.cvtColor(image_64, cv2.COLOR_GRAY2RGB)
+    return cv2.cvtColor(image_64,cv2.COLOR_BGR2GRAY)

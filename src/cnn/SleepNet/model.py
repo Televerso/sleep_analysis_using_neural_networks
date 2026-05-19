@@ -2,8 +2,7 @@ import torch
 import torch.nn as nn
 
 class SleepNet(nn.Module):
-    def __init__(self, ch1, ch2, ch3, fc1, num_classes, p):
-        input_shape = (64, 64, 3)
+    def __init__(self, ch1: int = 32, ch2:int = 64, ch3:int=128, fc1:int=512, num_classes:int=3, p:float=0.5):
         super().__init__()
 
         def init_weights(m):

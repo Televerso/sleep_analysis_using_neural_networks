@@ -54,4 +54,4 @@ def make_loaders(path : str, batch_size: int = 32, val_to_train_ratio : float = 
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    return train_loader, val_loader, test_loader
+    return {"train_loader" : train_loader, "val_loader": val_loader,"test_loader": test_loader}

@@ -12,7 +12,7 @@ from src.video_processing.input_reader import reader
 from tests.test_utils.MaskListAssertions import TestMaskListAssertions
 
 
-class SleepNet_single_test(unittest.TestCase):
+class SleepNet_batch_test(unittest.TestCase):
     def setUp(self):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
         weights_path = os.path.join(ROOT_DIR, r"tests\cnn_tests\SleepNet_tests\input_data\weights.pth")

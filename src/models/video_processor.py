@@ -59,7 +59,11 @@ class VideoProcessor(QObject):
                 masks_64[i] = BasicFunctions.get_64pix_mask(masks[i])
 
             classifier = SleepNetClassifier(path_to_weights)
-            pose_list = classifier.predict_batch(masks_64)
+            pose_list = [0 for i in range(frames.shape[0])]
+            n_batches = 16
+            size_batch = frames.shape[0] // n_batches
+            for i in range(n_batches-1):
+                pose_list[i*size_batch:(i+1)*size_batch] = classifier.predict_batch(masks_64[i*size_batch:(i+1)*size_batch])
 
             self.status.emit("Compiling results")
             self.progress.emit(85)

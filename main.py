@@ -1,3 +1,20 @@
-import struct
+import sys
+from PySide6.QtWidgets import QApplication
 
-print(f"Python is {'64' if struct.calcsize('P') == 8 else '32'}-bit")
+from src.controllers.MainController import MainController
+from src.models.MainModel import MainModel
+from src.views.MainWindow import MainWindow
+
+
+def main(*args, **kwargs):
+    app = QApplication(sys.argv)
+    view = MainWindow()
+    model = MainModel()
+    controller = MainController(view, model)
+    view.show()
+
+    sys.exit(app.exec())
+    pass
+
+if __name__ == '__main__':
+    main()

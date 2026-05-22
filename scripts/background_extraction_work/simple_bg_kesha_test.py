@@ -1,6 +1,7 @@
 import os
 
 import src.video_processing.background_extractor.simple_background_extractor as sb
+from src.utils.config_readers.BGSubstractorConfig import BGSubstractorConfig
 from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.utils.file_functions.save_frames import save_frames
 from src.video_processing.input_reader.reader import rsv_read_all
@@ -11,6 +12,7 @@ if __name__ == '__main__':
     config = ReaderConfig().from_yaml(os.path.join(ROOT_DIR, r'config\config.yml'))
     frames = rsv_read_all(video_path, config)
 
+    confog = BGSubstractorConfig.from_yaml(os.path.join(ROOT_DIR, r'config\config.yml'))
 
 
     sb_ext = sb.SimpleBackgroundExtractor(frames[-1], 128)

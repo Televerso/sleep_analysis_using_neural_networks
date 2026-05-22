@@ -2,7 +2,7 @@ video_reader:
   width : 240
   height : 180
   rotate : 0
-  fps : 2
+  fps : 0.5
 
 vibe_motion_detector:
   N : 20
@@ -10,4 +10,7 @@ vibe_motion_detector:
   min : 2
   phi : 16
 
+background_substractor:
+  threshold : 60
+  use_first_or_last_frame_as_the_model : "last"
 

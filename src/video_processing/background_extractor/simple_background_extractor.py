@@ -1,15 +1,16 @@
 import numpy as np
 import src.utils.basic_functions.BasicFunctions as bf
+from src.utils.config_readers.BGSubstractorConfig import BGSubstractorConfig
 
 
 class SimpleBackgroundExtractor:
-    def __init__(self, image, threshold):
+    def __init__(self, image, config : BGSubstractorConfig):
         self.background_image = np.asarray(image)
         self.background_image[:,:,0] = bf.blur(np.asarray(image[:,:,0]), 5, 1)
         self.background_image[:,:,1] = bf.blur(np.asarray(image[:,:,1]), 5, 1)
         self.background_image[:,:,2] = bf.blur(np.asarray(image[:,:,2]), 5, 1)
 
-        self.threshold = threshold
+        self.threshold = config.threshold
 
     def detect(self, image):
         curr_image = np.asarray(image)

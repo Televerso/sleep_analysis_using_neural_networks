@@ -4,7 +4,7 @@ import unittest
 import cv2
 import numpy as np
 
-from src.cnn.SleepNet import predictor
+from src.cnn.SleepNet import classifier
 from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.utils.config_readers.ViBEConfig import ViBEConfig
 import src.video_processing.vibe_extractor.vibe_extractor as vibe_extractor
@@ -22,7 +22,7 @@ class SleepNet_batch_test(unittest.TestCase):
         for i in range(n):
             self.images[i] = cv2.imread(os.path.join(ROOT_DIR, r'tests\cnn_tests\SleepNet_tests\input_data\batch', f"{str(i)}.png"))[..., 0]
 
-        self.predictor = predictor.SleepNetPredictor(weights_path)
+        self.predictor = predictor.SleepNetClassifier(weights_path)
 
     def test_batch(self):
         results = self.predictor.predict_batch(self.images)

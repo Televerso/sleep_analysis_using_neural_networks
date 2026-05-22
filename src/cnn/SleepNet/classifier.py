@@ -4,7 +4,7 @@ from src.cnn.SleepNet.model import SleepNet
 from src.cnn.utils import load_model
 
 
-class SleepNetPredictor:
+class SleepNetClassifier:
     def __init__(self, path_to_weights):
         self.model = load_model.load(SleepNet(), path_to_weights)
         self.model.eval()

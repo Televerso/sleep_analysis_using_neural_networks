@@ -1,8 +1,9 @@
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
-from matplotlib.figure import Figure
+from datetime import datetime
+
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
-from datetime import datetime
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
 
 
 class HypnogramWidget(FigureCanvasQTAgg):

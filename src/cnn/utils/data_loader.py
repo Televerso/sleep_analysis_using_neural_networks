@@ -1,7 +1,8 @@
 import os
 
-from torchvision import transforms, datasets
 from torch.utils.data import DataLoader, random_split
+from torchvision import transforms, datasets
+
 
 def make_loaders(path : str, batch_size: int = 32, val_to_train_ratio : float = 0.05):
     if not os.path.exists(path):

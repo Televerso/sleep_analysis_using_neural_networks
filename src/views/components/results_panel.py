@@ -1,7 +1,7 @@
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QLabel, QHeaderView
-)
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QLabel
+)
 
 
 class ResultsPanel(QWidget):

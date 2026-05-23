@@ -5,7 +5,7 @@ import yaml
 
 @dataclass()
 class ReaderConfig:
-    fps: int = 60
+    fps: float = 60
     width: int = 320
     height: int = 240
     rotate: int = 0

@@ -14,3 +14,15 @@ background_substractor:
   threshold : 60
   use_first_or_last_frame_as_the_model : "last"
 
+sleep_analyzer:
+  epoch_len : 30
+  movement_threshold : 0.01
+  wake_threshold : 0.1
+  
+  Am : 8.5
+  Ap : 8.5
+  Aw : 2
+  alpha : 1
+  beta : 0.01
+  gamma : 0.5
+

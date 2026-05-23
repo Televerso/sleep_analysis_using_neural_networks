@@ -8,6 +8,7 @@ class MainModel(QObject):
     def __init__(self):
         super().__init__()
         self.video_path = None
+        self.results = None
 
 
     def generate_preview(self, file_path):

@@ -8,6 +8,10 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QPixmap
 
+from src.views.components.hypnogram_widget import HypnogramWidget
+from src.views.components.results_panel import ResultsPanel
+
+
 class MainWindow(QWidget):
     # --- Signals for the controller ---
     file_selected = Signal(str)
@@ -53,13 +57,16 @@ class MainWindow(QWidget):
         content_widget = QWidget()
         canvas_layout = QVBoxLayout(content_widget)
 
-        self.results_table = QTableWidget(5, 2)
-        self.results_table.setHorizontalHeaderLabels(('Time','Pose'))
-        canvas_layout.addWidget(self.results_table)
+        self.hypnogram = HypnogramWidget()
+        canvas_layout.addWidget(self.hypnogram)
+
+        self.results_panel = ResultsPanel()
+        canvas_layout.addWidget(self.results_panel)
 
         canvas_layout.addStretch()
         scroll_area.setWidget(content_widget)
         main_layout.addWidget(scroll_area, 1, 0, 1, 2)
+
 
         # --- Row 1: Preview ---
         preview_area = QWidget()
@@ -136,4 +143,6 @@ class MainWindow(QWidget):
             self.preview_param_table.setItem(0, 3, QTableWidgetItem(info_dict['end time']))
 
     def display_results(self, results):
-        pass
+        self.hypnogram.plot(results["stages"])
+        self.results_panel.set_scores(results["scores"])
+        self.results_panel.set_parameters(results["parameters"])

@@ -53,8 +53,8 @@ class MainController(QObject):
             self._thread.started.connect(self._worker.run)
             self._worker.progress.connect(self.view.update_progress)
             self._worker.status.connect(self.view.update_status)
-            self._worker.finished.connect(self._on_processing_finished)
-            self._worker.error_status.connect(self._on_processing_error)
+            self._worker.finished.connect(self.on_processing_finished)
+            self._worker.error_status.connect(self.on_processing_error)
 
             self._worker.finished.connect(self._thread.quit)
             self._worker.finished.connect(self._worker.deleteLater)
@@ -67,10 +67,17 @@ class MainController(QObject):
             self.view.start_button.setEnabled(True)
             self.process_exeption(e)
 
-    def _on_processing_finished(self, results):
-        self.model.results = results
+
+
+    def on_processing_finished(self, results):
+        try:
+            self.model.results = results
+            self.view.start_button.setEnabled(True)
+        except Exception as e:
+            self.view.start_button.setEnabled(True)
+            self.process_exeption(e)
         self.view.display_results(results)
 
-    def _on_processing_error(self, error):
+    def on_processing_error(self, error):
         self.view.start_button.setEnabled(True)
         self.process_exeption(error)

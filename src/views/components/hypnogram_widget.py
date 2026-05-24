@@ -7,7 +7,7 @@ from matplotlib.figure import Figure
 
 
 class HypnogramWidget(FigureCanvasQTAgg):
-    def __init__(self, parent=None):
+    def __init__(self, is_dark : bool = False, parent=None):
         # Use a style that respects our manual settings
         plt.style.use('seaborn-v0_8-dark-palette')
 
@@ -32,7 +32,11 @@ class HypnogramWidget(FigureCanvasQTAgg):
             'NREM': '#4B0082',  # Deep purple/indigo
         }
 
-        self._apply_dark_theme()
+        self.is_dark = is_dark
+        if self.is_dark:
+            self._apply_dark_theme()
+        else:
+            self._apply_light_theme()
 
     def _apply_dark_theme(self):
         # Figure and axes backgrounds
@@ -51,6 +55,26 @@ class HypnogramWidget(FigureCanvasQTAgg):
 
         # Grid
         self.axes.grid(True, alpha=0.15, color='#e0e0e0')
+
+        self.fig.tight_layout(pad=1.5)
+
+    def _apply_light_theme(self):
+        # Figure and axes backgrounds
+        self.fig.patch.set_facecolor('#ffffff')
+        self.axes.set_facecolor('#ffffff')
+
+        # Text colors
+        self.axes.tick_params(colors='#333333')
+        self.axes.xaxis.label.set_color('#333333')
+        self.axes.yaxis.label.set_color('#333333')
+        self.axes.title.set_color('#333333')
+
+        # Spine colors
+        for spine in self.axes.spines.values():
+            spine.set_color('#cccccc')
+
+        # Grid
+        self.axes.grid(True, alpha=0.3, color='#999999')
 
         self.fig.tight_layout(pad=1.5)
 
@@ -76,7 +100,11 @@ class HypnogramWidget(FigureCanvasQTAgg):
 
         # 1. Clear and re-apply theme (clear() resets some settings)
         self.axes.clear()
-        self._apply_dark_theme()
+
+        if self.is_dark:
+            self._apply_dark_theme()
+        else:
+            self._apply_light_theme()
 
         # 2. Convert timestamps to numerical format
         numeric_timestamps = mdates.date2num(plot_timestamps)
@@ -112,17 +140,15 @@ class HypnogramWidget(FigureCanvasQTAgg):
         self.axes.set_ylim(-0.5, 2.5)
 
         # 7. Y-axis labels
-        self.axes.set_ylabel('Sleep Stage', color='#e0e0e0', fontsize=9)
         self.axes.set_yticks([0, 1, 2])
-        self.axes.set_yticklabels(['NREM', 'REM', 'WAKE'], color='#e0e0e0')
+        self.axes.set_yticklabels(['NREM', 'REM', 'WAKE'])
 
         # 8. X-axis formatting
         self.axes.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
         self.axes.xaxis.set_major_locator(mdates.AutoDateLocator())
-        self.axes.set_xlabel('Time', color='#e0e0e0', fontsize=9)
 
         # Grid
-        self.axes.grid(True, alpha=0.15, color='#e0e0e0', axis='y')
+        self.axes.grid(True, alpha=0.15, axis='y')
         # Rotate time labels for readability
         self.fig.autofmt_xdate(rotation=30, ha='right')
         # Ensure the layout uses space efficiently

@@ -6,16 +6,29 @@ from PySide6.QtWidgets import (
     QSizePolicy, QTableWidgetItem, QFileDialog
 )
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QGuiApplication
 
 from src.views.components.hypnogram_widget import HypnogramWidget
 from src.views.components.results_panel import ResultsPanel
+from enum import Enum
+
+from src.views.utils.is_system_dark_mode import is_system_dark_mode
+
+
+class UIState(Enum):
+    DEFAULT = 0
+    PROCESSING = 1
+    PROCESSING_FINISHED = 2
+    EXPORTING = 3
+    ERROR = 4
+
 
 
 class MainWindow(QWidget):
     # --- Signals for the controller ---
     file_selected = Signal(str)
     start_processing = Signal()
+    cancel_processing = Signal()
 
     def __init__(self):
         super().__init__()
@@ -44,9 +57,9 @@ class MainWindow(QWidget):
         main_layout.addWidget(self.file_path_input, 0, 1)
 
         # Video browse button
-        browse_button = QPushButton("Browse")
-        browse_button.clicked.connect(self._on_browse_clicked)
-        main_layout.addWidget(browse_button, 0, 2)
+        self.browse_button = QPushButton("Browse")
+        self.browse_button.clicked.connect(self._on_browse_clicked)
+        main_layout.addWidget(self.browse_button, 0, 2)
 
 
         # --- Row 1. ---
@@ -57,7 +70,7 @@ class MainWindow(QWidget):
         content_widget = QWidget()
         canvas_layout = QVBoxLayout(content_widget)
 
-        self.hypnogram = HypnogramWidget()
+        self.hypnogram = HypnogramWidget(is_system_dark_mode())
         canvas_layout.addWidget(self.hypnogram)
 
         self.results_panel = ResultsPanel()
@@ -68,28 +81,41 @@ class MainWindow(QWidget):
         main_layout.addWidget(scroll_area, 1, 0, 1, 2)
 
 
-        # --- Row 1: Preview ---
+        # --- Row 1: Preview and action buttons ---
         preview_area = QWidget()
-        preview_layout = QVBoxLayout(preview_area)
+        side_layout = QVBoxLayout(preview_area)
 
         self.preview_label = QLabel("Preview")
         self.preview_label.setMinimumSize(160, 120)
         self.preview_label.setMaximumSize(160, 120)
         self.preview_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.preview_label.setStyleSheet("border: 1px solid black")
-        preview_layout.addWidget(self.preview_label, 0, Qt.AlignmentFlag.AlignTop)
+        side_layout.addWidget(self.preview_label, 0, Qt.AlignmentFlag.AlignTop)
 
         self.preview_param_table = QTableWidget(4, 1)
         self.preview_param_table.horizontalHeader().setVisible(False)
         self.preview_param_table.setVerticalHeaderLabels(('fps','duration','time start','time end'))
         self.preview_param_table.setMaximumWidth(160)
-        preview_layout.addWidget(self.preview_param_table, 0, Qt.AlignmentFlag.AlignTop)
+        side_layout.addWidget(self.preview_param_table, 0, Qt.AlignmentFlag.AlignTop)
 
-        preview_layout.addStretch()
+        # Buttons
+        self.start_button = QPushButton("Start")
+        self.start_button.clicked.connect(self._on_start_clicked)
+        side_layout.addWidget(self.start_button, 0, Qt.AlignmentFlag.AlignBottom)
+
+        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button.clicked.connect(self._on_cancel_clicked)
+        side_layout.addWidget(self.cancel_button, 0, Qt.AlignmentFlag.AlignBottom)
+
+        self.config_button = QPushButton("Config")
+        self.config_button.clicked.connect(self._on_config_clicked)
+        side_layout.addWidget(self.config_button, 0, Qt.AlignmentFlag.AlignBottom)
+
+        side_layout.addStretch()
         main_layout.addWidget(preview_area, 1, 2)
 
 
-        # --- Row 2. progress and action button ---
+        # --- Row 2. progress and export button ---
         self.progress_label = QLabel("Progress")
         main_layout.addWidget(self.progress_label, 2, 0, 2, 2)
 
@@ -97,10 +123,6 @@ class MainWindow(QWidget):
         self.progress_bar.setRange(0, 100)
         self.progress_bar.setValue(0)
         main_layout.addWidget(self.progress_bar, 3, 0, 3, 2)
-
-        self.start_button = QPushButton("Start")
-        self.start_button.clicked.connect(self._on_start_clicked)
-        main_layout.addWidget(self.start_button, 2, 2)
 
         self.export_button = QPushButton("Export")
         self.export_button.setEnabled(False)
@@ -124,8 +146,14 @@ class MainWindow(QWidget):
 
     def _on_start_clicked(self):
         if self.file_path_input.text():
-            self.start_button.setEnabled(False)
             self.start_processing.emit()
+
+    def _on_cancel_clicked(self):
+        self.progress_label.setText("Cancelling...")
+        self.cancel_processing.emit()
+
+    def _on_config_clicked(self):
+        pass
 
     def update_status(self, status : str):
         self.progress_label.setText(status)
@@ -146,3 +174,46 @@ class MainWindow(QWidget):
         self.hypnogram.plot(results["stages"])
         self.results_panel.set_scores(results["scores"])
         self.results_panel.set_parameters(results["parameters"])
+
+    def set_ui_state(self, state: UIState):
+        if state == UIState.DEFAULT:
+            self.start_button.setEnabled(True)
+            self.file_path_input.setEnabled(True)
+            self.browse_button.setEnabled(True)
+            self.export_button.setEnabled(False)
+            self.cancel_button.setEnabled(False)
+            self.progress_label.setStyleSheet("")
+
+        elif state == UIState.PROCESSING:
+            self.start_button.setEnabled(False)
+            self.file_path_input.setEnabled(False)
+            self.browse_button.setEnabled(False)
+            self.export_button.setEnabled(False)
+            self.cancel_button.setEnabled(True)
+            self.progress_label.setStyleSheet("")
+
+        elif state == UIState.PROCESSING_FINISHED:
+            self.start_button.setEnabled(True)
+            self.file_path_input.setEnabled(True)
+            self.browse_button.setEnabled(True)
+            self.export_button.setEnabled(True)
+            self.cancel_button.setEnabled(False)
+            self.progress_label.setStyleSheet("")
+
+        elif state == UIState.EXPORTING:
+            self.start_button.setEnabled(False)
+            self.file_path_input.setEnabled(False)
+            self.browse_button.setEnabled(False)
+            self.export_button.setEnabled(False)
+            self.cancel_button.setEnabled(False)
+            self.progress_label.setText("Exporting")
+            self.progress_label.setStyleSheet("color: yellow")
+
+        elif state == UIState.ERROR:
+            self.start_button.setEnabled(True)
+            self.file_path_input.setEnabled(True)
+            self.browse_button.setEnabled(True)
+            self.export_button.setEnabled(False)
+            self.cancel_button.setEnabled(False)
+            self.progress_label.setText("Error")
+            self.progress_label.setStyleSheet("color: red")

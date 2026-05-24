@@ -6,6 +6,7 @@ from PySide6.QtGui import QImage, QPixmap
 
 from src.models import video_processor
 from src.views.ErrorWindow import ErrorWindow
+from src.views.MainWindow import UIState
 
 
 class MainController(QObject):
@@ -22,9 +23,10 @@ class MainController(QObject):
 
         self.view.file_selected.connect(self.on_file_selected)
         self.view.start_processing.connect(self.on_start_pressed)
+        self.view.cancel_processing.connect(self.on_cancel_pressed)
+        self.view.set_ui_state(UIState.DEFAULT)
 
-
-    def process_exeption(self, exception):
+    def show_exeption(self, exception):
         self.error_view = ErrorWindow()
         self.error_view.set_error_msg(str(exception))
         self.error_view.show()
@@ -34,13 +36,14 @@ class MainController(QObject):
             qt_image, info_dict = self.model.generate_preview(file_path)
             self.view.update_preview(qt_image, info_dict)
             self.model.video_path = file_path
+            self.view.set_ui_state(UIState.DEFAULT)
         except Exception as e:
             self.process_exeption(e)
-
 
     def on_start_pressed(self):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
         try:
+            self.view.set_ui_state(UIState.PROCESSING)
             video_path = self.model.video_path
             config_path = os.path.join(ROOT_DIR, 'config', 'config.yml')
             if not video_path:
@@ -53,31 +56,52 @@ class MainController(QObject):
             self._thread.started.connect(self._worker.run)
             self._worker.progress.connect(self.view.update_progress)
             self._worker.status.connect(self.view.update_status)
-            self._worker.finished.connect(self.on_processing_finished)
-            self._worker.error_status.connect(self.on_processing_error)
 
-            self._worker.finished.connect(self._thread.quit)
-            self._worker.finished.connect(self._worker.deleteLater)
-            self._thread.finished.connect(self._thread.deleteLater)
+            self._worker.error_status.connect(self.on_processing_error)
+            self._worker.cancelled.connect(self.on_processing_cancelled)
+            self._worker.finished.connect(self.on_processing_finished)
 
             # Start!
             self._thread.start()
 
         except Exception as e:
-            self.view.start_button.setEnabled(True)
-            self.process_exeption(e)
-
-
+            self.view.set_ui_state(UIState.ERROR)
+            self.show_exeption(e)
 
     def on_processing_finished(self, results):
         try:
             self.model.results = results
-            self.view.start_button.setEnabled(True)
+            self.view.display_results(results)
+            self.view.set_ui_state(UIState.PROCESSING_FINISHED)
+            self._quit_thread()
         except Exception as e:
-            self.view.start_button.setEnabled(True)
-            self.process_exeption(e)
-        self.view.display_results(results)
+            self.view.set_ui_state(UIState.ERROR)
+            self.show_exeption(e)
 
     def on_processing_error(self, error):
-        self.view.start_button.setEnabled(True)
-        self.process_exeption(error)
+        self.view.set_ui_state(UIState.ERROR)
+        self.show_exeption(error)
+        self._quit_thread()
+
+    def on_processing_cancelled(self):
+        self.view.set_ui_state(UIState.DEFAULT)
+        self.view.update_status("Cancelled")
+        self._quit_thread()
+
+
+    def on_cancel_pressed(self):
+        self._worker.cancel()
+
+
+    def _quit_thread(self):
+        if self._thread and self._thread.isRunning():
+            self._thread.quit()
+            self._thread.wait(3000)
+
+        if self._worker:
+            self._worker.deleteLater()
+            self._worker = None
+
+        if self._thread:
+            self._thread.deleteLater()
+            self._thread = None

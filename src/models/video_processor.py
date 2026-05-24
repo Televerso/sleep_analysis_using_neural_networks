@@ -21,11 +21,17 @@ class VideoProcessor(QObject):
     status = Signal(str)
     finished = Signal(object)
     error_status = Signal(object)
+    cancelled = Signal()
 
     def __init__(self, video_path, config_path):
         super().__init__()
         self.video_path = video_path
         self.config_path = config_path
+
+        self._stop_flag = False
+
+    def cancel(self):
+        self._stop_flag = True
 
     def run(self):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
@@ -40,6 +46,10 @@ class VideoProcessor(QObject):
             vibe_config = ViBEConfig.from_yaml(self.config_path)
             analyzer_config = SleepAnalyzerConfig.from_yaml(self.config_path)
 
+            if self._stop_flag:
+                self.cancelled.emit()
+                return
+
             self.status.emit("Loading video")
             self.progress.emit(5)
 
@@ -47,20 +57,37 @@ class VideoProcessor(QObject):
 
             metadata = get_metadata_from_video(self.video_path)
 
+            if self._stop_flag:
+                self.cancelled.emit()
+                return
+
             self.status.emit("Analyzing presence")
             self.progress.emit(35)
 
             masks = substract_background(frames, bgs_config)
             object_presence_list = [(np.sum(masks[i]) / (masks.shape[1] * masks.shape[2])) > 0.05 for i in range(masks.shape[0])]
 
+            if self._stop_flag:
+                self.cancelled.emit()
+                return
+
             self.status.emit("Analyzing movement intensity")
             self.progress.emit(45)
 
             movement_masks = pybind_process_three_channels(frames, vibe_config)
+
+            if self._stop_flag:
+                self.cancelled.emit()
+                return
+
             self.progress.emit(60)
             motion_intensity_list = detect_motion(movement_masks, n=5)
 
             movement_masks = None
+
+            if self._stop_flag:
+                self.cancelled.emit()
+                return
 
             self.status.emit("Analyzing poses")
             self.progress.emit(70)
@@ -69,6 +96,10 @@ class VideoProcessor(QObject):
             for i in range(frames.shape[0]):
                 masks_64[i] = BasicFunctions.get_64pix_mask(masks[i])
             masks = None
+
+            if self._stop_flag:
+                self.cancelled.emit()
+                return
 
             self.progress.emit(75)
 
@@ -80,6 +111,10 @@ class VideoProcessor(QObject):
                 pose_list[i*size_batch:(i+1)*size_batch] = classifier.predict_batch(masks_64[i*size_batch:(i+1)*size_batch])
 
             masks_64 = None
+
+            if self._stop_flag:
+                self.cancelled.emit()
+                return
 
             self.status.emit("Calculating results")
             self.progress.emit(85)
@@ -104,9 +139,9 @@ class VideoProcessor(QObject):
 
             results = sleep_analyzer.get_sleeping_score()
 
-
             self.status.emit("Done!")
             self.progress.emit(100)
+
             self.finished.emit(results)
         except Exception as e:
             self.error_status.emit(e)

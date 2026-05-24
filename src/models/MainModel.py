@@ -2,12 +2,14 @@ import cv2
 from PySide6.QtCore import QObject
 from PySide6.QtGui import QImage
 from src.utils.file_functions.get_metadata_from_video import get_metadata_from_video
+import yaml
 
 
 class MainModel(QObject):
     def __init__(self):
         super().__init__()
         self.video_path = None
+        self.config_path = None
         self.results = None
 
 
@@ -27,4 +29,14 @@ class MainModel(QObject):
         info_dict = {key : str(val) for key,val in get_metadata_from_video(file_path).items()}
 
         return qt_image, info_dict
+
+    def read_config(self):
+        with open(self.config_path, 'r') as f:
+            data = yaml.safe_load(f)
+        return data
+
+    def save_config(self, config):
+        with open(self.config_path, 'w') as f:
+            yaml.dump(config, f, sort_keys=False, default_flow_style=False)
+
 

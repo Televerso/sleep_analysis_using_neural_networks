@@ -1,16 +1,12 @@
-import os
-import sys
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QGridLayout, QPushButton, QLabel,
-    QLineEdit, QProgressBar, QScrollArea, QFrame, QVBoxLayout, QTableWidget,
-    QSizePolicy, QTableWidgetItem, QFileDialog
+    QPushButton, QLabel,
+    QVBoxLayout, QDialog
 )
-from PySide6.QtCore import Qt, Signal
 
-class ErrorWindow(QWidget):
 
-    def __init__(self):
-        super().__init__()
+class ErrorWindow(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         self.setWindowTitle("Error")
         self.setMinimumSize(300, 200)

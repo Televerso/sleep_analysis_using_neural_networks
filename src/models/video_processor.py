@@ -1,12 +1,16 @@
 import os
+
+import cv2
 import numpy as np
 import src.utils.basic_functions.BasicFunctions as BasicFunctions
 
 from PySide6.QtCore import QObject, Signal
 from anyio import sleep
+from src.utils.basic_functions.BasicFunctions import rotate
 from src.utils.config_readers.BGSubstractorConfig import BGSubstractorConfig
 from src.utils.config_readers.ReaderConfig import ReaderConfig
 from src.utils.config_readers.SleepAnalyzerConfig import SleepAnalyzerConfig
+from src.utils.config_readers.SleepNetWeightsConfig import SleepNetWeightsConfig
 from src.utils.config_readers.ViBEConfig import ViBEConfig
 from src.utils.file_functions.get_metadata_from_video import get_metadata_from_video
 from src.video_processing.input_reader.reader import rsv_read_with_gap
@@ -34,9 +38,6 @@ class VideoProcessor(QObject):
         self._stop_flag = True
 
     def run(self):
-        ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
-        path_to_weights = os.path.join(ROOT_DIR, "data", "models", "SleepNet", "SleepNet_v6.pth")
-
         try:
             self.status.emit("Loading configs")
             self.progress.emit(0)
@@ -46,6 +47,8 @@ class VideoProcessor(QObject):
             vibe_config = ViBEConfig.from_yaml(self.config_path)
             analyzer_config = SleepAnalyzerConfig.from_yaml(self.config_path)
 
+            path_to_weights = SleepNetWeightsConfig.from_yaml(self.config_path).path_to_weights
+
             if self._stop_flag:
                 self.cancelled.emit()
                 return
@@ -54,6 +57,11 @@ class VideoProcessor(QObject):
             self.progress.emit(5)
 
             frames = rsv_read_with_gap(self.video_path, reader_config)
+
+
+            if reader_config.rotate:
+                frames = np.rot90(frames, k=reader_config.rotate, axes=(1, 2))
+
 
             metadata = get_metadata_from_video(self.video_path)
 
@@ -93,7 +101,7 @@ class VideoProcessor(QObject):
             self.progress.emit(70)
 
             masks_64 = np.empty(shape=(masks.shape[0], 64, 64), dtype=np.uint8)
-            for i in range(frames.shape[0]):
+            for i in range(masks.shape[0]):
                 masks_64[i] = BasicFunctions.get_64pix_mask(masks[i])
             masks = None
 
@@ -145,5 +153,6 @@ class VideoProcessor(QObject):
             self.finished.emit(results)
         except Exception as e:
             self.error_status.emit(e)
+
 
 

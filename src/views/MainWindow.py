@@ -29,6 +29,7 @@ class MainWindow(QWidget):
     file_selected = Signal(str)
     start_processing = Signal()
     cancel_processing = Signal()
+    open_config = Signal()
 
     def __init__(self):
         super().__init__()
@@ -153,7 +154,7 @@ class MainWindow(QWidget):
         self.cancel_processing.emit()
 
     def _on_config_clicked(self):
-        pass
+        self.open_config.emit()
 
     def update_status(self, status : str):
         self.progress_label.setText(status)
@@ -182,6 +183,7 @@ class MainWindow(QWidget):
             self.browse_button.setEnabled(True)
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
+            self.config_button.setEnabled(True)
             self.progress_label.setStyleSheet("")
 
         elif state == UIState.PROCESSING:
@@ -190,6 +192,7 @@ class MainWindow(QWidget):
             self.browse_button.setEnabled(False)
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(True)
+            self.config_button.setEnabled(False)
             self.progress_label.setStyleSheet("")
 
         elif state == UIState.PROCESSING_FINISHED:
@@ -198,6 +201,7 @@ class MainWindow(QWidget):
             self.browse_button.setEnabled(True)
             self.export_button.setEnabled(True)
             self.cancel_button.setEnabled(False)
+            self.config_button.setEnabled(True)
             self.progress_label.setStyleSheet("")
 
         elif state == UIState.EXPORTING:
@@ -206,6 +210,7 @@ class MainWindow(QWidget):
             self.browse_button.setEnabled(False)
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
+            self.config_button.setEnabled(False)
             self.progress_label.setText("Exporting")
             self.progress_label.setStyleSheet("color: yellow")
 
@@ -215,5 +220,6 @@ class MainWindow(QWidget):
             self.browse_button.setEnabled(True)
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
+            self.config_button.setEnabled(True)
             self.progress_label.setText("Error")
             self.progress_label.setStyleSheet("color: red")

@@ -1,28 +1,24 @@
-video_reader:
-  width : 160
-  height : 120
-  rotate : 0
-  fps : 0.5
-
-vibe_motion_detector:
-  N : 20
-  R : 40
-  min : 2
-  phi : 16
-
 background_substractor:
-  threshold : 60
-  use_first_or_last_frame_as_the_model : "last"
-
+  threshold: 60
 sleep_analyzer:
-  epoch_len : 30
-  movement_threshold : 0.01
-  wake_threshold : 0.1
-  
-  Am : 8.5
-  Ap : 8.5
-  Aw : 2
-  alpha : 1
-  beta : 0.01
-  gamma : 0.5
-
+  Am: 8.5
+  Ap: 8.5
+  Aw: 2
+  alpha: 1.0
+  beta: 0.01
+  epoch_len: 30
+  gamma: 0.5
+  movement_threshold: 0.01
+  wake_threshold: 0.1
+sleep_net_weights:
+  path_to_weights: C:/Users/dboga/PycharmProjects/sleep_analysis_using_neural_networks/data/models/SleepNet/SleepNet_v6.pth
+vibe_motion_detector:
+  N: 20
+  R: 40
+  min: 2
+  phi: 16
+video_reader:
+  fps: 0.5
+  height: 120
+  rotate: 2
+  width: 160

@@ -125,9 +125,10 @@ class ConfigView(QDialog):
 
         weights_container = QWidget()
         weights_layout = QHBoxLayout(weights_container)
+        weights_layout.addWidget(QLabel('Model weights: '))
         weights_layout.addWidget(self.model_weights)
         weights_layout.addWidget(browse_button)
-        cnn_layout.addRow('Model weights: ', weights_container)
+        cnn_layout.addRow(weights_container)
 
         self.tab_widget.addTab(cnn_tab, 'CNN layout')
 

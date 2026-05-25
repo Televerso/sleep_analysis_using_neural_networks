@@ -14,6 +14,7 @@ from enum import Enum
 
 from src.views.utils.is_system_dark_mode import is_system_dark_mode
 
+from src.utils.trenslation_manager.translation_manager import _
 
 class UIState(Enum):
     DEFAULT = 0
@@ -35,7 +36,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
 
-        self.setWindowTitle("Sleep Analysis Using Neural Networks")
+        self.setWindowTitle(_("Sleep Analysis Using Neural Networks"))
         self.setMinimumSize(800, 600)
 
         # --- Main Layout ---
@@ -49,16 +50,16 @@ class MainWindow(QWidget):
 
         # --- Row 0. File controls. ---
         # Video input label
-        main_layout.addWidget(QLabel("Video file:"), 0, 0)
+        main_layout.addWidget(QLabel(_("Video file: ")), 0, 0)
 
         # Video input field
         self.file_path_input = QLineEdit()
-        self.file_path_input.setPlaceholderText("Select input video file")
+        self.file_path_input.setPlaceholderText(_("Select input video file"))
         self.file_path_input.returnPressed.connect(self._on_file_input)
         main_layout.addWidget(self.file_path_input, 0, 1)
 
         # Video browse button
-        self.browse_button = QPushButton("Browse")
+        self.browse_button = QPushButton(_("Browse"))
         self.browse_button.clicked.connect(self._on_browse_clicked)
         main_layout.addWidget(self.browse_button, 0, 2)
 
@@ -86,7 +87,7 @@ class MainWindow(QWidget):
         preview_area = QWidget()
         side_layout = QVBoxLayout(preview_area)
 
-        self.preview_label = QLabel("Preview")
+        self.preview_label = QLabel(_("Preview"))
         self.preview_label.setMinimumSize(160, 120)
         self.preview_label.setMaximumSize(160, 120)
         self.preview_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -95,20 +96,20 @@ class MainWindow(QWidget):
 
         self.preview_param_table = QTableWidget(4, 1)
         self.preview_param_table.horizontalHeader().setVisible(False)
-        self.preview_param_table.setVerticalHeaderLabels(('fps','duration','time start','time end'))
+        self.preview_param_table.setVerticalHeaderLabels((_('fps'),_('duration'),_('time start'),_('time end')))
         self.preview_param_table.setMaximumWidth(160)
         side_layout.addWidget(self.preview_param_table, 0, Qt.AlignmentFlag.AlignTop)
 
         # Buttons
-        self.start_button = QPushButton("Start")
+        self.start_button = QPushButton(_("Start"))
         self.start_button.clicked.connect(self._on_start_clicked)
         side_layout.addWidget(self.start_button, 0, Qt.AlignmentFlag.AlignBottom)
 
-        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button = QPushButton(_("Cancel"))
         self.cancel_button.clicked.connect(self._on_cancel_clicked)
         side_layout.addWidget(self.cancel_button, 0, Qt.AlignmentFlag.AlignBottom)
 
-        self.config_button = QPushButton("Config")
+        self.config_button = QPushButton(_("Config"))
         self.config_button.clicked.connect(self._on_config_clicked)
         side_layout.addWidget(self.config_button, 0, Qt.AlignmentFlag.AlignBottom)
 
@@ -117,7 +118,7 @@ class MainWindow(QWidget):
 
 
         # --- Row 2. progress and export button ---
-        self.progress_label = QLabel("Progress")
+        self.progress_label = QLabel(_("Progress"))
         main_layout.addWidget(self.progress_label, 2, 0, 2, 2)
 
         self.progress_bar = QProgressBar()
@@ -125,7 +126,7 @@ class MainWindow(QWidget):
         self.progress_bar.setValue(0)
         main_layout.addWidget(self.progress_bar, 3, 0, 3, 2)
 
-        self.export_button = QPushButton("Export")
+        self.export_button = QPushButton(_("Export"))
         self.export_button.setEnabled(False)
         main_layout.addWidget(self.export_button, 3, 2)
 
@@ -137,8 +138,8 @@ class MainWindow(QWidget):
 
 
     def _on_browse_clicked(self):
-        file_path, _ = QFileDialog.getOpenFileName(self,
-                                                   caption="Select video file",
+        file_path, tmp = QFileDialog.getOpenFileName(self,
+                                                   caption=_("Select video file"),
                                                    dir=self.ROOT_DIR,
                                                    filter="Video files (*.mp4 *.mkv *.avi)")
         if file_path:
@@ -150,7 +151,7 @@ class MainWindow(QWidget):
             self.start_processing.emit()
 
     def _on_cancel_clicked(self):
-        self.progress_label.setText("Cancelling...")
+        self.progress_label.setText(_("Cancelling..."))
         self.cancel_processing.emit()
 
     def _on_config_clicked(self):
@@ -211,7 +212,7 @@ class MainWindow(QWidget):
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
             self.config_button.setEnabled(False)
-            self.progress_label.setText("Exporting")
+            self.progress_label.setText(_("Exporting"))
             self.progress_label.setStyleSheet("color: yellow")
 
         elif state == UIState.ERROR:
@@ -221,5 +222,5 @@ class MainWindow(QWidget):
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
             self.config_button.setEnabled(True)
-            self.progress_label.setText("Error")
+            self.progress_label.setText(_("Error"))
             self.progress_label.setStyleSheet("color: red")

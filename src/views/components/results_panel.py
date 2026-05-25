@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QLabel
 )
 
+from src.utils.trenslation_manager.translation_manager import _
 
 class ResultsPanel(QWidget):
     def __init__(self, parent=None):
@@ -10,7 +11,7 @@ class ResultsPanel(QWidget):
         layout = QVBoxLayout(self)
 
         # Scores label
-        self.scores_label = QLabel("No results yet")
+        self.scores_label = QLabel(_("No results yet"))
         self.scores_label.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.scores_label.setStyleSheet("font-size: 14px; padding: 10px;")
         layout.addWidget(self.scores_label)
@@ -18,7 +19,7 @@ class ResultsPanel(QWidget):
         # Parameters table
         self.params_table = QTableWidget()
         self.params_table.setRowCount(2)
-        self.params_table.setVerticalHeaderLabels(["Parameter", "Value"])
+        self.params_table.setVerticalHeaderLabels([_("Parameter"), _("Value")])
         self.params_table.horizontalHeader().setVisible(False)
         layout.addWidget(self.params_table)
 

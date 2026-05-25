@@ -1,0 +1,311 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-05-26 00:18+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../src/controllers/MainController.py:56
+msgid "No file selected"
+msgstr ""
+
+#: ../src/controllers/MainController.py:94
+msgid "Cancelled"
+msgstr ""
+
+#: ../src/models/video_processor.py:44
+msgid "Loading configs"
+msgstr ""
+
+#: ../src/models/video_processor.py:58
+msgid "Loading video"
+msgstr ""
+
+#: ../src/models/video_processor.py:74
+msgid "Analyzing presence"
+msgstr ""
+
+#: ../src/models/video_processor.py:84
+msgid "Analyzing movement intensity"
+msgstr ""
+
+#: ../src/models/video_processor.py:102
+msgid "Analyzing poses"
+msgstr ""
+
+#: ../src/models/video_processor.py:129
+msgid "Calculating results"
+msgstr ""
+
+#: ../src/models/video_processor.py:152
+msgid "Done!"
+msgstr ""
+
+#: ../src/views/ConfigView.py:19
+msgid "Settings"
+msgstr ""
+
+#: ../src/views/ConfigView.py:36
+msgid "Target fps to process"
+msgstr ""
+
+#: ../src/views/ConfigView.py:37
+msgid "FPS: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:42
+msgid "Width of the processed video"
+msgstr ""
+
+#: ../src/views/ConfigView.py:43
+msgid "Width: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:48
+msgid "Height of the processed video"
+msgstr ""
+
+#: ../src/views/ConfigView.py:49
+msgid "Height: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:74
+msgid "Rotate: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:76
+msgid "Video Processing"
+msgstr ""
+
+#: ../src/views/ConfigView.py:85
+msgid "Number of samples per pixel"
+msgstr ""
+
+#: ../src/views/ConfigView.py:86
+msgid "ViBE Samples (N): "
+msgstr ""
+
+#: ../src/views/ConfigView.py:91
+msgid "Radius threshold for pixel matching"
+msgstr ""
+
+#: ../src/views/ConfigView.py:92
+msgid "ViBE Radius (R): "
+msgstr ""
+
+#: ../src/views/ConfigView.py:97
+msgid "Minimum matches for background classification"
+msgstr ""
+
+#: ../src/views/ConfigView.py:98
+msgid "ViBE Min (#min): "
+msgstr ""
+
+#: ../src/views/ConfigView.py:103
+msgid "1/phi chance to update the background"
+msgstr ""
+
+#: ../src/views/ConfigView.py:104
+msgid "ViBE Phi (phi): "
+msgstr ""
+
+#: ../src/views/ConfigView.py:106
+msgid "Motion Processing"
+msgstr ""
+
+#: ../src/views/ConfigView.py:115
+msgid "Threshold for background classification"
+msgstr ""
+
+#: ../src/views/ConfigView.py:116
+msgid "Background Threshold: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:118
+msgid "Background Processing"
+msgstr ""
+
+#: ../src/views/ConfigView.py:125 ../src/views/MainWindow.py:62
+msgid "Browse"
+msgstr ""
+
+#: ../src/views/ConfigView.py:130
+msgid "Model weights: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:135
+msgid "CNN layout"
+msgstr ""
+
+#: ../src/views/ConfigView.py:144
+msgid "Length of the epoch"
+msgstr ""
+
+#: ../src/views/ConfigView.py:145
+msgid "Epoch Length: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:150
+msgid "Threshold for detecting the sleep movement"
+msgstr ""
+
+#: ../src/views/ConfigView.py:151
+msgid "Sleep Movement Threshold: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:156
+msgid "Threshold for detecting the wake state"
+msgstr ""
+
+#: ../src/views/ConfigView.py:157
+msgid "Awake Threshold: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:162
+msgid "Optimal sleep duration"
+msgstr ""
+
+#: ../src/views/ConfigView.py:163
+msgid "Sleep Am: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:168
+msgid "Personolized sleep duration"
+msgstr ""
+
+#: ../src/views/ConfigView.py:169
+msgid "Sleep Ap: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:174
+msgid "Optimal number ow awakings"
+msgstr ""
+
+#: ../src/views/ConfigView.py:175
+msgid "Sleep Aw: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:180
+msgid "Alpha coefficient"
+msgstr ""
+
+#: ../src/views/ConfigView.py:181
+msgid "Sleep Alpha: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:186
+msgid "Beta coefficient"
+msgstr ""
+
+#: ../src/views/ConfigView.py:187
+msgid "Sleep Beta: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:192
+msgid "Gamma coefficient"
+msgstr ""
+
+#: ../src/views/ConfigView.py:193
+msgid "Sleep Gamma: "
+msgstr ""
+
+#: ../src/views/ConfigView.py:195
+msgid "Sleep Analysis"
+msgstr ""
+
+#: ../src/views/ConfigView.py:289
+msgid "Open weights file"
+msgstr ""
+
+#: ../src/views/ErrorWindow.py:11 ../src/views/MainWindow.py:225
+msgid "Error"
+msgstr ""
+
+#: ../src/views/MainWindow.py:39
+msgid "Sleep Analysis Using Neural Networks"
+msgstr ""
+
+#: ../src/views/MainWindow.py:53
+msgid "Video file: "
+msgstr ""
+
+#: ../src/views/MainWindow.py:57
+msgid "Select input video file"
+msgstr ""
+
+#: ../src/views/MainWindow.py:90
+msgid "Preview"
+msgstr ""
+
+#: ../src/views/MainWindow.py:99
+msgid "fps"
+msgstr ""
+
+#: ../src/views/MainWindow.py:99
+msgid "duration"
+msgstr ""
+
+#: ../src/views/MainWindow.py:99
+msgid "time start"
+msgstr ""
+
+#: ../src/views/MainWindow.py:99
+msgid "time end"
+msgstr ""
+
+#: ../src/views/MainWindow.py:104
+msgid "Start"
+msgstr ""
+
+#: ../src/views/MainWindow.py:108
+msgid "Cancel"
+msgstr ""
+
+#: ../src/views/MainWindow.py:112
+msgid "Config"
+msgstr ""
+
+#: ../src/views/MainWindow.py:121
+msgid "Progress"
+msgstr ""
+
+#: ../src/views/MainWindow.py:129
+msgid "Export"
+msgstr ""
+
+#: ../src/views/MainWindow.py:142
+msgid "Select video file"
+msgstr ""
+
+#: ../src/views/MainWindow.py:154
+msgid "Cancelling..."
+msgstr ""
+
+#: ../src/views/MainWindow.py:215
+msgid "Exporting"
+msgstr ""
+
+#: ../src/views/components/results_panel.py:14
+msgid "No results yet"
+msgstr ""
+
+#: ../src/views/components/results_panel.py:22
+msgid "Parameter"
+msgstr ""
+
+#: ../src/views/components/results_panel.py:22
+msgid "Value"
+msgstr ""
+

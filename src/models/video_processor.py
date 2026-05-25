@@ -20,6 +20,8 @@ from src.video_processing.motion_intensity_calculator.motion_intensoty_calculato
 from src.cnn.SleepNet.classifier import SleepNetClassifier as SleepNetClassifier
 from src.sleep_analyser.sleep_analyzer_v1.sleep_analyzer_v1 import SleepAnalyzer_v1
 
+from src.utils.trenslation_manager.translation_manager import _
+
 class VideoProcessor(QObject):
     progress = Signal(int)
     status = Signal(str)
@@ -39,7 +41,7 @@ class VideoProcessor(QObject):
 
     def run(self):
         try:
-            self.status.emit("Loading configs")
+            self.status.emit(_("Loading configs"))
             self.progress.emit(0)
 
             reader_config = ReaderConfig.from_yaml(self.config_path)
@@ -53,7 +55,7 @@ class VideoProcessor(QObject):
                 self.cancelled.emit()
                 return
 
-            self.status.emit("Loading video")
+            self.status.emit(_("Loading video"))
             self.progress.emit(5)
 
             frames = rsv_read_with_gap(self.video_path, reader_config)
@@ -69,7 +71,7 @@ class VideoProcessor(QObject):
                 self.cancelled.emit()
                 return
 
-            self.status.emit("Analyzing presence")
+            self.status.emit(_("Analyzing presence"))
             self.progress.emit(35)
 
             masks = substract_background(frames, bgs_config)
@@ -79,7 +81,7 @@ class VideoProcessor(QObject):
                 self.cancelled.emit()
                 return
 
-            self.status.emit("Analyzing movement intensity")
+            self.status.emit(_("Analyzing movement intensity"))
             self.progress.emit(45)
 
             movement_masks = pybind_process_three_channels(frames, vibe_config)
@@ -97,7 +99,7 @@ class VideoProcessor(QObject):
                 self.cancelled.emit()
                 return
 
-            self.status.emit("Analyzing poses")
+            self.status.emit(_("Analyzing poses"))
             self.progress.emit(70)
 
             masks_64 = np.empty(shape=(masks.shape[0], 64, 64), dtype=np.uint8)
@@ -124,7 +126,7 @@ class VideoProcessor(QObject):
                 self.cancelled.emit()
                 return
 
-            self.status.emit("Calculating results")
+            self.status.emit(_("Calculating results"))
             self.progress.emit(85)
 
             pose_array = np.array(pose_list)
@@ -147,7 +149,7 @@ class VideoProcessor(QObject):
 
             results = sleep_analyzer.get_sleeping_score()
 
-            self.status.emit("Done!")
+            self.status.emit(_("Done!"))
             self.progress.emit(100)
 
             self.finished.emit(results)

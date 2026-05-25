@@ -4,9 +4,11 @@ from PySide6.QtWidgets import QApplication
 from src.controllers.MainController import MainController
 from src.models.MainModel import MainModel
 from src.views.MainWindow import MainWindow
-
+from src.utils.trenslation_manager.translation_manager import i18n
 
 def main(*args, **kwargs):
+    i18n.load_translation('ru_RU')
+
     app = QApplication(sys.argv)
     view = MainWindow()
     model = MainModel()

@@ -2,13 +2,13 @@ from PySide6.QtWidgets import (
     QPushButton, QLabel,
     QVBoxLayout, QDialog
 )
-
+from src.utils.trenslation_manager.translation_manager import _
 
 class ErrorWindow(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.setWindowTitle("Error")
+        self.setWindowTitle(_("Error"))
         self.setMinimumSize(300, 200)
 
         layout = QVBoxLayout()

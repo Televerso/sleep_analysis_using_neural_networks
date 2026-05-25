@@ -10,6 +10,8 @@ from src.views.ErrorWindow import ErrorWindow
 from src.views.MainWindow import UIState
 from src.views.ConfigView import ConfigView
 
+from src.utils.trenslation_manager.translation_manager import _
+
 class MainController(QObject):
     error_msg = Signal(str)
 
@@ -51,7 +53,7 @@ class MainController(QObject):
             video_path = self.model.video_path
             config_path = os.path.join(ROOT_DIR, 'config', 'config.yml')
             if not video_path:
-                raise FileNotFoundError("No file selected")
+                raise FileNotFoundError(_("No file selected"))
 
             self._thread = QThread()
             self._worker = video_processor.VideoProcessor(video_path, config_path)
@@ -89,7 +91,7 @@ class MainController(QObject):
 
     def on_processing_cancelled(self):
         self.view.set_ui_state(UIState.DEFAULT)
-        self.view.update_status("Cancelled")
+        self.view.update_status(_("Cancelled"))
         self._quit_thread()
 
     def on_cancel_pressed(self):

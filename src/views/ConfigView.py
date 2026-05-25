@@ -8,6 +8,7 @@ from PySide6.QtCore import Qt, Signal
 
 from src.utils.file_functions.get_root_path import get_root_path
 
+from src.utils.trenslation_manager.translation_manager import _
 
 class ConfigView(QDialog):
     settings_changed = Signal(dict)
@@ -15,7 +16,7 @@ class ConfigView(QDialog):
     def __init__(self, curr_config : dict , parent=None):
         super().__init__(parent)
 
-        self.setWindowTitle('Settings')
+        self.setWindowTitle(_("Settings"))
         self.setMinimumSize(600, 400)
         self._config = curr_config.copy()
 
@@ -32,24 +33,25 @@ class ConfigView(QDialog):
         self.fps = QDoubleSpinBox()
         self.fps.setRange(0.1, 60)
         self.fps.setSingleStep(0.1)
-        self.fps.setToolTip("Target fps to process")
-        video_layout.addRow('FPS: ', self.fps)
+        self.fps.setToolTip(_("Target fps to process"))
+        video_layout.addRow(_('FPS: '), self.fps)
 
         self.resize_width = QSpinBox()
         self.resize_width.setRange(60, 360)
         self.resize_width.setSingleStep(1)
-        self.resize_width.setToolTip("Width of the processed video")
-        video_layout.addRow('Width: ', self.resize_width)
+        self.resize_width.setToolTip(_("Width of the processed video"))
+        video_layout.addRow(_('Width: '), self.resize_width)
 
         self.resize_height = QSpinBox()
         self.resize_height.setRange(40, 240)
         self.resize_height.setSingleStep(1)
-        self.resize_height.setToolTip("Height of the processed video")
-        video_layout.addRow('Height: ', self.resize_height)
+        self.resize_height.setToolTip(_("Height of the processed video"))
+        video_layout.addRow(_('Height: '), self.resize_height)
 
 
         # Create a container widget for the radio buttons
         rotation_container = QWidget()
+
         rotation_layout = QHBoxLayout(rotation_container)
 
         self.rotate_video = QButtonGroup(rotation_container)
@@ -69,9 +71,9 @@ class ConfigView(QDialog):
         rotation_layout.addWidget(rotate_270)
 
         # Add the container to the form
-        video_layout.addRow('Rotate:', rotation_container)
+        video_layout.addRow(_('Rotate: '), rotation_container)
 
-        self.tab_widget.addTab(video_tab, 'Video Processing')
+        self.tab_widget.addTab(video_tab, _("Video Processing"))
 
         # --- Motion Detection ---
         motion_tab = QWidget()
@@ -80,28 +82,28 @@ class ConfigView(QDialog):
         self.vibe_n = QSpinBox()
         self.vibe_n.setRange(1, 32)
         self.vibe_n.setSingleStep(1)
-        self.vibe_n.setToolTip("Number of samples per pixel")
-        motion_layout.addRow('ViBE Samples (N): ', self.vibe_n)
+        self.vibe_n.setToolTip(_("Number of samples per pixel"))
+        motion_layout.addRow(_('ViBE Samples (N): '), self.vibe_n)
 
         self.vibe_r = QSpinBox()
         self.vibe_r.setRange(1, 100)
         self.vibe_r.setSingleStep(1)
-        self.vibe_r.setToolTip("Radius threshold for pixel matching")
-        motion_layout.addRow('ViBE Radius (R): ', self.vibe_r)
+        self.vibe_r.setToolTip(_("Radius threshold for pixel matching"))
+        motion_layout.addRow(_('ViBE Radius (R): '), self.vibe_r)
 
         self.vibe_min = QSpinBox()
         self.vibe_min.setRange(1, 10)
         self.vibe_min.setSingleStep(1)
-        self.vibe_min.setToolTip("Minimum matches for background classification")
-        motion_layout.addRow('ViBE Min (#min): ', self.vibe_min)
+        self.vibe_min.setToolTip(_("Minimum matches for background classification"))
+        motion_layout.addRow(_('ViBE Min (#min): '), self.vibe_min)
 
         self.vibe_phi = QSpinBox()
         self.vibe_phi.setRange(1, 100)
         self.vibe_phi.setSingleStep(1)
-        self.vibe_phi.setToolTip("1/phi chance to update the background")
-        motion_layout.addRow('ViBE Phi (phi): ', self.vibe_phi)
+        self.vibe_phi.setToolTip(_("1/phi chance to update the background"))
+        motion_layout.addRow(_('ViBE Phi (phi): '), self.vibe_phi)
 
-        self.tab_widget.addTab(motion_tab, 'Motion Processing')
+        self.tab_widget.addTab(motion_tab, _('Motion Processing'))
 
         # --- Background substraction ---
         bgs_tab = QWidget()
@@ -110,27 +112,27 @@ class ConfigView(QDialog):
         self.bgs_threshold = QSpinBox()
         self.bgs_threshold.setRange(0, 255)
         self.bgs_threshold.setSingleStep(1)
-        self.bgs_threshold.setToolTip("Threshold for background classification")
-        bgs_layout.addRow('Background Threshold: ', self.bgs_threshold)
+        self.bgs_threshold.setToolTip(_("Threshold for background classification"))
+        bgs_layout.addRow(_('Background Threshold: '), self.bgs_threshold)
 
-        self.tab_widget.addTab(bgs_tab, 'Background Processing')
+        self.tab_widget.addTab(bgs_tab, _('Background Processing'))
 
         # --- SleepNet weights ---
         cnn_tab = QWidget()
         cnn_layout = QFormLayout(cnn_tab)
 
         self.model_weights = QLineEdit()
-        browse_button = QPushButton("Browse")
+        browse_button = QPushButton(_("Browse"))
         browse_button.clicked.connect(self._browse_weights)
 
         weights_container = QWidget()
         weights_layout = QHBoxLayout(weights_container)
-        weights_layout.addWidget(QLabel('Model weights: '))
+        weights_layout.addWidget(QLabel(_('Model weights: ')))
         weights_layout.addWidget(self.model_weights)
         weights_layout.addWidget(browse_button)
         cnn_layout.addRow(weights_container)
 
-        self.tab_widget.addTab(cnn_tab, 'CNN layout')
+        self.tab_widget.addTab(cnn_tab, _('CNN layout'))
 
         # --- Sleep analyzer ---
         sleep_analyzer_tab = QWidget()
@@ -139,58 +141,58 @@ class ConfigView(QDialog):
         self.epoch_len = QSpinBox()
         self.epoch_len.setRange(1, 120)
         self.epoch_len.setSingleStep(1)
-        self.epoch_len.setToolTip("Length of the epoch")
-        sleep_analyzer_layout.addRow('Epoch Length: ', self.epoch_len)
+        self.epoch_len.setToolTip(_("Length of the epoch"))
+        sleep_analyzer_layout.addRow(_('Epoch Length: '), self.epoch_len)
 
         self.sleep_movement_threshold = QDoubleSpinBox()
         self.sleep_movement_threshold.setRange(0.005, 1)
         self.sleep_movement_threshold.setSingleStep(0.005)
-        self.sleep_movement_threshold.setToolTip("Threshold for detecting the sleep movement")
-        sleep_analyzer_layout.addRow('Sleep Movement Threshold: ', self.sleep_movement_threshold)
+        self.sleep_movement_threshold.setToolTip(_("Threshold for detecting the sleep movement"))
+        sleep_analyzer_layout.addRow(_('Sleep Movement Threshold: '), self.sleep_movement_threshold)
 
         self.awake_threshold = QDoubleSpinBox()
         self.awake_threshold.setRange(0.005, 1)
         self.awake_threshold.setSingleStep(0.005)
-        self.awake_threshold.setToolTip("Threshold for detecting the wake state")
-        sleep_analyzer_layout.addRow('Awake Threshold: ', self.awake_threshold)
+        self.awake_threshold.setToolTip(_("Threshold for detecting the wake state"))
+        sleep_analyzer_layout.addRow(_('Awake Threshold: '), self.awake_threshold)
 
         self.sleep_Am = QDoubleSpinBox()
         self.sleep_Am.setRange(1, 12)
         self.sleep_Am.setSingleStep(0.5)
-        self.sleep_Am.setToolTip("Optimal sleep duration")
-        sleep_analyzer_layout.addRow('Sleep Am: ', self.sleep_Am)
+        self.sleep_Am.setToolTip(_("Optimal sleep duration"))
+        sleep_analyzer_layout.addRow(_('Sleep Am: '), self.sleep_Am)
 
         self.sleep_Ap = QDoubleSpinBox()
         self.sleep_Ap.setRange(1, 12)
         self.sleep_Ap.setSingleStep(0.5)
-        self.sleep_Ap.setToolTip("Personolized sleep duration")
-        sleep_analyzer_layout.addRow('Sleep Ap: ', self.sleep_Ap)
+        self.sleep_Ap.setToolTip(_("Personolized sleep duration"))
+        sleep_analyzer_layout.addRow(_('Sleep Ap: '), self.sleep_Ap)
 
         self.sleep_Aw = QSpinBox()
         self.sleep_Aw.setRange(0, 12)
         self.sleep_Aw.setSingleStep(1)
-        self.sleep_Aw.setToolTip("Optimal number ow awakings")
-        sleep_analyzer_layout.addRow('Sleep Aw: ', self.sleep_Aw)
+        self.sleep_Aw.setToolTip(_("Optimal number ow awakings"))
+        sleep_analyzer_layout.addRow(_('Sleep Aw: '), self.sleep_Aw)
 
         self.sleep_alpha = QDoubleSpinBox()
         self.sleep_alpha.setRange(0, 1)
         self.sleep_alpha.setSingleStep(0.01)
-        self.sleep_alpha.setToolTip("Alpha coefficient")
-        sleep_analyzer_layout.addRow('Sleep Alpha: ', self.sleep_alpha)
+        self.sleep_alpha.setToolTip(_("Alpha coefficient"))
+        sleep_analyzer_layout.addRow(_('Sleep Alpha: '), self.sleep_alpha)
 
         self.sleep_beta = QDoubleSpinBox()
         self.sleep_beta.setRange(0, 1)
         self.sleep_beta.setSingleStep(0.01)
-        self.sleep_beta.setToolTip("Beta coefficient")
-        sleep_analyzer_layout.addRow('Sleep Beta: ', self.sleep_beta)
+        self.sleep_beta.setToolTip(_("Beta coefficient"))
+        sleep_analyzer_layout.addRow(_('Sleep Beta: '), self.sleep_beta)
 
         self.sleep_gamma = QDoubleSpinBox()
         self.sleep_gamma.setRange(0, 1)
         self.sleep_gamma.setSingleStep(0.01)
-        self.sleep_gamma.setToolTip("Gamma coefficient")
-        sleep_analyzer_layout.addRow('Sleep Gamma: ', self.sleep_gamma)
+        self.sleep_gamma.setToolTip(_("Gamma coefficient"))
+        sleep_analyzer_layout.addRow(_('Sleep Gamma: '), self.sleep_gamma)
 
-        self.tab_widget.addTab(sleep_analyzer_tab, 'Sleep Analysis')
+        self.tab_widget.addTab(sleep_analyzer_tab, _('Sleep Analysis'))
 
         # --- Dialog Buttons ---
 
@@ -284,7 +286,7 @@ class ConfigView(QDialog):
         self.settings_changed.emit(new_config)
 
     def _browse_weights(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, 'Open weights file', dir=get_root_path(),
+        file_path, tmp = QFileDialog.getOpenFileName(self, _('Open weights file'), dir=get_root_path(),
                                                    filter="PyTorch Weights (*.pth);;All Files (*)")
         if file_path:
             self.model_weights.setText(file_path)

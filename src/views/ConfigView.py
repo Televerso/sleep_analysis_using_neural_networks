@@ -13,7 +13,7 @@ from src.views.utils.lang_code_map import language_to_id, id_to_language
 
 
 class ConfigView(QDialog):
-    settings_changed = Signal(dict)
+    settings_changed = Signal(dict, bool)
 
     def __init__(self, curr_config : dict , parent=None):
         super().__init__(parent)
@@ -147,14 +147,16 @@ class ConfigView(QDialog):
         sleep_analyzer_layout.addRow(_('Epoch Length: '), self.epoch_len)
 
         self.sleep_movement_threshold = QDoubleSpinBox()
-        self.sleep_movement_threshold.setRange(0.005, 1)
-        self.sleep_movement_threshold.setSingleStep(0.005)
+        self.sleep_movement_threshold.setRange(0.001, 1)
+        self.sleep_movement_threshold.setSingleStep(0.001)
+        self.sleep_movement_threshold.setDecimals(3)
         self.sleep_movement_threshold.setToolTip(_("Threshold for detecting the sleep movement"))
         sleep_analyzer_layout.addRow(_('Sleep Movement Threshold: '), self.sleep_movement_threshold)
 
         self.awake_threshold = QDoubleSpinBox()
-        self.awake_threshold.setRange(0.005, 1)
-        self.awake_threshold.setSingleStep(0.005)
+        self.awake_threshold.setRange(0.001, 1)
+        self.awake_threshold.setSingleStep(0.001)
+        self.awake_threshold.setDecimals(3)
         self.awake_threshold.setToolTip(_("Threshold for detecting the wake state"))
         sleep_analyzer_layout.addRow(_('Awake Threshold: '), self.awake_threshold)
 
@@ -304,12 +306,12 @@ class ConfigView(QDialog):
 
     def _on_save(self):
         new_config = self._collect_values()
-        self.settings_changed.emit(new_config)
+        self.settings_changed.emit(new_config, False)
         self.accept()
 
     def _on_apply(self):
         new_config = self._collect_values()
-        self.settings_changed.emit(new_config)
+        self.settings_changed.emit(new_config, True)
 
     def _browse_weights(self):
         file_path, tmp = QFileDialog.getOpenFileName(self, _('Open weights file'), dir=get_root_path(),

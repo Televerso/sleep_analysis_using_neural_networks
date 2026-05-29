@@ -8,8 +8,8 @@ sleep_analyzer:
   beta: 0.01
   epoch_len: 30
   gamma: 0.5
-  movement_threshold: 0.01
-  wake_threshold: 0.1
+  movement_threshold: 0.005
+  wake_threshold: 0.07
 sleep_net_weights:
   path_to_weights: C:/Users/dboga/PycharmProjects/sleep_analysis_using_neural_networks/data/models/SleepNet/SleepNet_v6.pth
 system_settings:

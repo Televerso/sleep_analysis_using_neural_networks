@@ -11,7 +11,6 @@ from src.views.ErrorWindow import ErrorWindow
 from src.views.MainWindow import UIState
 from src.views.ConfigView import ConfigView
 
-
 from src.utils.trenslation_manager.translation_manager import _
 from src.utils.trenslation_manager.translation_manager import i18n
 from src.views.utils.SystemConfig import SystemConfig
@@ -39,6 +38,14 @@ class MainController(QObject):
         self.view.open_config.connect(self.open_settings)
         self.view.set_ui_state(UIState.DEFAULT)
 
+        try:
+            self.model.curr_lang = language_to_code(SystemConfig.from_yaml(self.model.config_path).language)
+        except Exception as e:
+            self.show_exeption(e)
+            self.model.curr_lang = 'en_US'
+
+        i18n.load_translation(self.model.curr_lang)
+        self.view.update_gui_translations()
 
     def show_exeption(self, exception):
         self.error_view = ErrorWindow(self.view)
@@ -52,7 +59,7 @@ class MainController(QObject):
             self.model.video_path = file_path
             self.view.set_ui_state(UIState.DEFAULT)
         except Exception as e:
-            self.process_exeption(e)
+            self.show_exeption(e)
 
     def on_start_pressed(self):
         ROOT_DIR = os.path.split(os.environ['VIRTUAL_ENV'])[0]
@@ -127,17 +134,30 @@ class MainController(QObject):
             self.view.set_ui_state(UIState.ERROR)
             self.show_exeption(e)
 
-
-    def _on_settings_saved(self, new_config : dict):
+    def _on_settings_saved(self, new_config: dict, window_persisting : bool):
         try:
             self.model.save_config(new_config)
-            new_language = new_config["system_settings"]["language"]
-            i18n.load_translation(language_to_code(new_language))
-            self.view.update_gui_translations()
+            new_lang = language_to_code(new_config["system_settings"]["language"])
+            if new_lang != self.model.curr_lang:
+                self._language_updated(new_lang, window_persisting)
 
         except Exception as e:
             self.view.set_ui_state(UIState.ERROR)
             self.show_exeption(e)
+
+
+    def _language_updated(self, new_lang, window_persisting):
+        i18n.load_translation(new_lang)
+        self.view.update_gui_translations()
+        self.model.curr_lang = new_lang
+
+        if window_persisting:
+            # Instead of updating each label and every tab we just close and reopen the window
+            self.settings_view.close()
+
+            self.settings_view = ConfigView(self.model.read_config(), parent=self.view)
+            self.settings_view.settings_changed.connect(self._on_settings_saved)
+            self.settings_view.exec()
 
 
 

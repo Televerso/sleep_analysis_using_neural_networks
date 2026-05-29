@@ -39,6 +39,8 @@ class MainWindow(QWidget):
         self.setWindowTitle(_("Sleep Analysis Using Neural Networks"))
         self.setMinimumSize(800, 600)
 
+        self.__state = UIState.DEFAULT
+
         # --- Main Layout ---
         main_layout = QGridLayout(self)
         # Configure grid stretch factors:
@@ -50,7 +52,8 @@ class MainWindow(QWidget):
 
         # --- Row 0. File controls. ---
         # Video input label
-        main_layout.addWidget(QLabel(_("Video file: ")), 0, 0)
+        self.video_file_label = QLabel(_("Video file: "))
+        main_layout.addWidget(self.video_file_label, 0, 0)
 
         # Video input field
         self.file_path_input = QLineEdit()
@@ -224,3 +227,34 @@ class MainWindow(QWidget):
             self.config_button.setEnabled(True)
             self.progress_label.setText(_("Error"))
             self.progress_label.setStyleSheet("color: red")
+
+        if state in set(item for item in UIState):
+            self.__state = state
+
+
+    def update_gui_translations(self):
+        self.setWindowTitle(_("Sleep Analysis Using Neural Networks"))
+        self.video_file_label.setText(_("Video file: "))
+        self.file_path_input.setPlaceholderText(_("Select input video file"))
+        self.browse_button.setText(_("Browse"))
+        self.preview_label.setText(_("Preview"))
+        self.preview_param_table.setVerticalHeaderLabels((_('fps'), _('duration'), _('time start'), _('time end')))
+        self.start_button.setText(_("Start"))
+        self.cancel_button.setText(_("Cancel"))
+        self.config_button.setText(_("Config"))
+        self.export_button.setText(_("Export"))
+
+        self.results_panel.params_table.setVerticalHeaderLabels([_("Parameter"), _("Value")])
+
+        if self.__state == UIState.DEFAULT:
+            self.progress_label.setText(_("Progress"))
+            self.results_panel.scores_label.setText(_("Scores"))
+
+
+
+
+
+
+
+
+

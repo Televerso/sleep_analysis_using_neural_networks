@@ -9,6 +9,8 @@ from PySide6.QtCore import Qt, Signal
 from src.utils.file_functions.get_root_path import get_root_path
 
 from src.utils.trenslation_manager.translation_manager import _
+from src.views.utils.lang_code_map import language_to_id, id_to_language
+
 
 class ConfigView(QDialog):
     settings_changed = Signal(dict)
@@ -194,16 +196,33 @@ class ConfigView(QDialog):
 
         self.tab_widget.addTab(sleep_analyzer_tab, _('Sleep Analysis'))
 
+
+        # --- System settings ---
+        system_settings_tab = QWidget()
+        system_settings_layout = QFormLayout(system_settings_tab)
+
+        self.lang_locale = QComboBox()
+        self.lang_locale.addItem(_('English'))
+        self.lang_locale.addItem(_('Russian'))
+        self.lang_locale.setToolTip(_("Language selector"))
+        system_settings_layout.addRow(_('Language selector: '), self.lang_locale)
+
+        self.tab_widget.addTab(system_settings_tab, _('System Settings'))
+
+
         # --- Dialog Buttons ---
 
         button_box = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel | QDialogButtonBox.StandardButton.Apply
         )
         button_box.accepted.connect(self._on_save)
+        button_box.button(QDialogButtonBox.StandardButton.Ok).setText(_("Ok"))
         button_box.rejected.connect(self.reject)
+        button_box.button(QDialogButtonBox.StandardButton.Cancel).setText(_("Cancel"))
         button_box.button(QDialogButtonBox.StandardButton.Apply).clicked.connect(self._on_apply)
-        main_layout.addWidget(button_box)
+        button_box.button(QDialogButtonBox.StandardButton.Apply).setText(_("Apply"))
 
+        main_layout.addWidget(button_box)
 
         self._load_curr_values()
 
@@ -238,6 +257,9 @@ class ConfigView(QDialog):
         self.sleep_alpha.setValue(cfg.get("sleep_analyzer",{}).get("alpha", 1))
         self.sleep_beta.setValue(cfg.get("sleep_analyzer",{}).get("beta", 0.01))
         self.sleep_gamma.setValue(cfg.get("sleep_analyzer",{}).get("gamma", 0.5))
+
+        curr_language = cfg.get("system_settings",{}).get("language","English")
+        self.lang_locale.setCurrentIndex(language_to_id(curr_language))
 
 
     def _collect_values(self):
@@ -274,6 +296,10 @@ class ConfigView(QDialog):
         cfg["sleep_analyzer"]["beta"] = self.sleep_beta.value()
         cfg["sleep_analyzer"]["gamma"] = self.sleep_gamma.value()
 
+
+        cfg["system_settings"] = dict()
+        cfg["system_settings"]["language"] = id_to_language(self.lang_locale.currentIndex())
+
         return cfg
 
     def _on_save(self):
@@ -290,8 +316,6 @@ class ConfigView(QDialog):
                                                    filter="PyTorch Weights (*.pth);;All Files (*)")
         if file_path:
             self.model_weights.setText(file_path)
-
-
 
 
 

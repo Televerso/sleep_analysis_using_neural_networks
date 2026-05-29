@@ -1,5 +1,6 @@
-from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QGuiApplication
+
 
 def is_system_dark_mode():
     """Returns True if the OS is using dark mode."""

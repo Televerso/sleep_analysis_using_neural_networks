@@ -3,6 +3,7 @@ import os
 import cv2
 from PySide6.QtCore import QObject, Signal, QThread
 from PySide6.QtGui import QImage, QPixmap
+from PySide6.QtWidgets import QApplication
 
 from src.models import video_processor
 from src.utils.file_functions.get_root_path import get_root_path
@@ -10,7 +11,12 @@ from src.views.ErrorWindow import ErrorWindow
 from src.views.MainWindow import UIState
 from src.views.ConfigView import ConfigView
 
+
 from src.utils.trenslation_manager.translation_manager import _
+from src.utils.trenslation_manager.translation_manager import i18n
+from src.views.utils.SystemConfig import SystemConfig
+from src.views.utils.lang_code_map import language_to_code
+
 
 class MainController(QObject):
     error_msg = Signal(str)
@@ -19,6 +25,7 @@ class MainController(QObject):
         super().__init__()
         self.view = view
         self.error_view = None
+        self.settings_view = None
         self.model = model
 
         self.model.config_path = os.path.join(get_root_path(), "config", "config.yml")
@@ -31,6 +38,7 @@ class MainController(QObject):
         self.view.cancel_processing.connect(self.on_cancel_pressed)
         self.view.open_config.connect(self.open_settings)
         self.view.set_ui_state(UIState.DEFAULT)
+
 
     def show_exeption(self, exception):
         self.error_view = ErrorWindow(self.view)
@@ -112,19 +120,25 @@ class MainController(QObject):
 
     def open_settings(self):
         try:
-            settings_view = ConfigView(self.model.read_config(), parent=self.view)
-            settings_view.settings_changed.connect(self._on_settings_saved)
-            settings_view.exec()
+            self.settings_view = ConfigView(self.model.read_config(), parent=self.view)
+            self.settings_view.settings_changed.connect(self._on_settings_saved)
+            self.settings_view.exec()
         except Exception as e:
             self.view.set_ui_state(UIState.ERROR)
             self.show_exeption(e)
 
+
     def _on_settings_saved(self, new_config : dict):
         try:
             self.model.save_config(new_config)
+            new_language = new_config["system_settings"]["language"]
+            i18n.load_translation(language_to_code(new_language))
+            self.view.update_gui_translations()
+
         except Exception as e:
             self.view.set_ui_state(UIState.ERROR)
             self.show_exeption(e)
+
 
 
 

@@ -33,9 +33,15 @@ class HypnogramWidget(FigureCanvasQTAgg):
         }
 
         self.is_dark = is_dark
-        if self.is_dark:
+        self.apply_theme(is_dark)
+
+
+    def apply_theme(self, is_dark):
+        if is_dark:
+            self.is_dark = True
             self._apply_dark_theme()
         else:
+            self.is_dark = False
             self._apply_light_theme()
 
     def _apply_dark_theme(self):

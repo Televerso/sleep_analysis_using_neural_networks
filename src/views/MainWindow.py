@@ -73,16 +73,10 @@ class MainWindow(QWidget):
         scroll_area.setWidgetResizable(True)
 
         content_widget = QWidget()
-        canvas_layout = QVBoxLayout(content_widget)
-
-        self.hypnogram = HypnogramWidget(is_system_dark_mode())
-        canvas_layout.addWidget(self.hypnogram)
 
         self.results_panel = ResultsPanel()
-        canvas_layout.addWidget(self.results_panel)
 
-        canvas_layout.addStretch()
-        scroll_area.setWidget(content_widget)
+        scroll_area.setWidget(self.results_panel)
         main_layout.addWidget(scroll_area, 1, 0, 1, 2)
 
 
@@ -176,7 +170,7 @@ class MainWindow(QWidget):
             self.preview_param_table.setItem(0, 3, QTableWidgetItem(info_dict['end time']))
 
     def display_results(self, results):
-        self.hypnogram.plot(results["stages"])
+        self.results_panel.hypnogram.plot(results["stages"])
         self.results_panel.set_scores(results["scores"])
         self.results_panel.set_parameters(results["parameters"])
 

@@ -162,3 +162,9 @@ class HypnogramWidget(FigureCanvasQTAgg):
 
         # Redraw the canvas
         self.draw()
+
+    def _on_scroll(self, event):
+        pass
+
+    def wheelEvent(self, event):
+        event.ignore()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-05-29 00:41+0400\n"
+"POT-Creation-Date: 2026-05-30 18:27+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../src/controllers/MainController.py:64
+#: ../../src/controllers/MainController.py:71
 msgid "No file selected"
 msgstr ""
 
-#: ../../src/controllers/MainController.py:102
+#: ../../src/controllers/MainController.py:109
 msgid "Cancelled"
 msgstr ""
 
@@ -137,8 +137,8 @@ msgstr ""
 msgid "Background Processing"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:127 ../../src/views/MainWindow.py:65
-#: ../../src/views/MainWindow.py:239
+#: ../../src/views/ConfigView.py:127 ../../src/views/MainWindow.py:66
+#: ../../src/views/MainWindow.py:237
 msgid "Browse"
 msgstr ""
 
@@ -158,190 +158,237 @@ msgstr ""
 msgid "Epoch Length: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:152
+#: ../../src/views/ConfigView.py:153
 msgid "Threshold for detecting the sleep movement"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:153
+#: ../../src/views/ConfigView.py:154
 msgid "Sleep Movement Threshold: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:158
+#: ../../src/views/ConfigView.py:160
 msgid "Threshold for detecting the wake state"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:159
+#: ../../src/views/ConfigView.py:161
 msgid "Awake Threshold: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:164
+#: ../../src/views/ConfigView.py:166
 msgid "Optimal sleep duration"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:165
+#: ../../src/views/ConfigView.py:167
 msgid "Sleep Am: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:170
+#: ../../src/views/ConfigView.py:172
 msgid "Personolized sleep duration"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:171
+#: ../../src/views/ConfigView.py:173
 msgid "Sleep Ap: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:176
+#: ../../src/views/ConfigView.py:178
 msgid "Optimal number ow awakings"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:177
+#: ../../src/views/ConfigView.py:179
 msgid "Sleep Aw: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:182
+#: ../../src/views/ConfigView.py:184
 msgid "Alpha coefficient"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:183
+#: ../../src/views/ConfigView.py:185
 msgid "Sleep Alpha: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:188
+#: ../../src/views/ConfigView.py:190
 msgid "Beta coefficient"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:189
+#: ../../src/views/ConfigView.py:191
 msgid "Sleep Beta: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:194
+#: ../../src/views/ConfigView.py:196
 msgid "Gamma coefficient"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:195
+#: ../../src/views/ConfigView.py:197
 msgid "Sleep Gamma: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:197
+#: ../../src/views/ConfigView.py:199
 msgid "Sleep Analysis"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:205
+#: ../../src/views/ConfigView.py:207
 msgid "English"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:206
+#: ../../src/views/ConfigView.py:208
 msgid "Russian"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:207
+#: ../../src/views/ConfigView.py:209
 msgid "Language selector"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:208
+#: ../../src/views/ConfigView.py:210
 msgid "Language selector: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:210
+#: ../../src/views/ConfigView.py:212
 msgid "System Settings"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:219
+#: ../../src/views/ConfigView.py:221
 msgid "Ok"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:221 ../../src/views/MainWindow.py:111
-#: ../../src/views/MainWindow.py:243
+#: ../../src/views/ConfigView.py:223 ../../src/views/MainWindow.py:106
+#: ../../src/views/MainWindow.py:241
 msgid "Cancel"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:223
+#: ../../src/views/ConfigView.py:225
 msgid "Apply"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:315
+#: ../../src/views/ConfigView.py:317
 msgid "Open weights file"
 msgstr ""
 
-#: ../../src/views/ErrorWindow.py:11 ../../src/views/MainWindow.py:228
+#: ../../src/views/ErrorWindow.py:11 ../../src/views/MainWindow.py:226
 msgid "Error"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:39 ../../src/views/MainWindow.py:236
+#: ../../src/views/MainWindow.py:40 ../../src/views/MainWindow.py:234
 msgid "Sleep Analysis Using Neural Networks"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:55 ../../src/views/MainWindow.py:237
+#: ../../src/views/MainWindow.py:56 ../../src/views/MainWindow.py:235
 msgid "Video file: "
 msgstr ""
 
-#: ../../src/views/MainWindow.py:60 ../../src/views/MainWindow.py:238
+#: ../../src/views/MainWindow.py:61 ../../src/views/MainWindow.py:236
 msgid "Select input video file"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:93 ../../src/views/MainWindow.py:240
+#: ../../src/views/MainWindow.py:88 ../../src/views/MainWindow.py:238
 msgid "Preview"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:102 ../../src/views/MainWindow.py:241
+#: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "fps"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:102 ../../src/views/MainWindow.py:241
+#: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "duration"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:102 ../../src/views/MainWindow.py:241
+#: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "time start"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:102 ../../src/views/MainWindow.py:241
+#: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "time end"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:107 ../../src/views/MainWindow.py:242
+#: ../../src/views/MainWindow.py:102 ../../src/views/MainWindow.py:240
 msgid "Start"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:115 ../../src/views/MainWindow.py:244
+#: ../../src/views/MainWindow.py:110 ../../src/views/MainWindow.py:242
 msgid "Config"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:124 ../../src/views/MainWindow.py:250
+#: ../../src/views/MainWindow.py:119 ../../src/views/MainWindow.py:248
 msgid "Progress"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:132 ../../src/views/MainWindow.py:245
+#: ../../src/views/MainWindow.py:127 ../../src/views/MainWindow.py:243
 msgid "Export"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:145
+#: ../../src/views/MainWindow.py:140
 msgid "Select video file"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:157
+#: ../../src/views/MainWindow.py:152
 msgid "Cancelling..."
 msgstr ""
 
-#: ../../src/views/MainWindow.py:218
+#: ../../src/views/MainWindow.py:215
 msgid "Exporting"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:247
-#: ../../src/views/components/results_panel.py:23
+#: ../../src/views/MainWindow.py:245
+#: ../../src/views/components/results_panel.py:24
 msgid "Parameter"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:247
-#: ../../src/views/components/results_panel.py:23
+#: ../../src/views/MainWindow.py:245
+#: ../../src/views/components/results_panel.py:24
 msgid "Value"
 msgstr ""
 
-#: ../../src/views/MainWindow.py:251
+#: ../../src/views/MainWindow.py:249
 msgid "Scores"
 msgstr ""
 
-#: ../../src/views/components/results_panel.py:15
+#: ../../src/views/components/results_panel.py:33
 msgid "No results yet"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:47
+#: ../../src/views/components/results_panel.py:58
+msgid "Time"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:47
+msgid "Pose"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:58
+msgid "Stage"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:102
+msgid "awake"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:102
+msgid "REM stage"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:102
+msgid "NREM stages"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:102
+#: ../../src/views/components/results_panel.py:116
+msgid "start"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:102
+#: ../../src/views/components/results_panel.py:116
+msgid "end"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:116
+msgid "left log"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:116
+msgid "right log"
+msgstr ""
+
+#: ../../src/views/components/results_panel.py:116
+msgid "supine"
 msgstr ""
 

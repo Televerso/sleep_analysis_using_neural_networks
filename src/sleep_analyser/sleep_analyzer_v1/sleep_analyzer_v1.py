@@ -38,13 +38,13 @@ class SleepAnalyzer_v1:
                     self.pose_dict[str(time)] = 0
                 prev_pose = 0
 
-            elif self.stage_array[i] == 1:
+            elif self.poses[i] == 1:
                 if prev_pose != 1:
                     time = self.starting_time + (i / len(self.poses)) * self.record_len_in_sec
                     self.pose_dict[str(time)] = 1
                 prev_pose = 1
 
-            elif self.stage_array[i] == 2:
+            elif self.poses[i] == 2:
                 if prev_pose != 2:
                     time = self.starting_time + (i / len(self.poses)) * self.record_len_in_sec
                     self.pose_dict[str(time)] = 2
@@ -189,5 +189,7 @@ class SleepAnalyzer_v1:
         results["scores"] = scores
 
         results["stages"] = self.stage_dict
+
+        results["poses"] = self.pose_dict
 
         return results

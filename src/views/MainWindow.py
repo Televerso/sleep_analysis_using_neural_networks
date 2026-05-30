@@ -12,6 +12,7 @@ from src.views.components.hypnogram_widget import HypnogramWidget
 from src.views.components.results_panel import ResultsPanel
 from enum import Enum
 
+from src.views.components.scroll_area_for_results import ScrollAreaForResults
 from src.views.utils.is_system_dark_mode import is_system_dark_mode
 
 from src.utils.trenslation_manager.translation_manager import _
@@ -69,13 +70,13 @@ class MainWindow(QWidget):
 
         # --- Row 1. ---
         # --- Row 1: Canvas ---
-        scroll_area = QScrollArea()
-        scroll_area.setWidgetResizable(True)
-
-        content_widget = QWidget()
+        scroll_area = ScrollAreaForResults()
 
         self.results_panel = ResultsPanel()
-
+        self.results_panel.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding
+        )
         scroll_area.setWidget(self.results_panel)
         main_layout.addWidget(scroll_area, 1, 0, 1, 2)
 
@@ -170,9 +171,7 @@ class MainWindow(QWidget):
             self.preview_param_table.setItem(0, 3, QTableWidgetItem(info_dict['end time']))
 
     def display_results(self, results):
-        self.results_panel.hypnogram.plot(results["stages"])
-        self.results_panel.set_scores(results["scores"])
-        self.results_panel.set_parameters(results["parameters"])
+        self.results_panel.update_panel(results)
 
     def set_ui_state(self, state: UIState):
         if state == UIState.DEFAULT:
@@ -182,6 +181,7 @@ class MainWindow(QWidget):
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
             self.config_button.setEnabled(True)
+            self.results_panel.hide()
             self.progress_label.setStyleSheet("")
 
         elif state == UIState.PROCESSING:
@@ -191,6 +191,7 @@ class MainWindow(QWidget):
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(True)
             self.config_button.setEnabled(False)
+            self.results_panel.hide()
             self.progress_label.setStyleSheet("")
 
         elif state == UIState.PROCESSING_FINISHED:
@@ -200,6 +201,7 @@ class MainWindow(QWidget):
             self.export_button.setEnabled(True)
             self.cancel_button.setEnabled(False)
             self.config_button.setEnabled(True)
+            self.results_panel.show()
             self.progress_label.setStyleSheet("")
 
         elif state == UIState.EXPORTING:
@@ -209,6 +211,7 @@ class MainWindow(QWidget):
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
             self.config_button.setEnabled(False)
+            self.results_panel.show()
             self.progress_label.setText(_("Exporting"))
             self.progress_label.setStyleSheet("color: yellow")
 
@@ -219,6 +222,7 @@ class MainWindow(QWidget):
             self.export_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
             self.config_button.setEnabled(True)
+            self.results_panel.show()
             self.progress_label.setText(_("Error"))
             self.progress_label.setStyleSheet("color: red")
 

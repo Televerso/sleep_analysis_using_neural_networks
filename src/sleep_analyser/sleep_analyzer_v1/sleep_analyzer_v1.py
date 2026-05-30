@@ -15,6 +15,7 @@ class SleepAnalyzer_v1:
 
         self.stage_array = np.empty(shape=movement_intensity_array.shape)
         self.stage_dict = dict()
+        self.pose_dict = dict()
         self.epoch_len = int(self.config.epoch_len*framerate)
 
         self.starting_time = starting_time
@@ -22,9 +23,34 @@ class SleepAnalyzer_v1:
 
         self._calc_sleep_stage()
         self._get_stage_dict()
+        self._get_pose_dict()
 
         self.sleep_duration_in_sec = self.record_len_in_sec - int(len(self.stage_array[self.stage_array == "WAKE"])/framerate)
 
+    def _get_pose_dict(self):
+        prev_pose = ""
+        self.pose_dict[str(self.starting_time - 1)] = 'START'
+        for i in range(self.poses.shape[0]):
+
+            if self.poses[i] == 0:
+                if prev_pose != 0:
+                    time = self.starting_time + (i / len(self.poses)) * self.record_len_in_sec
+                    self.pose_dict[str(time)] = 0
+                prev_pose = 0
+
+            elif self.stage_array[i] == 1:
+                if prev_pose != 1:
+                    time = self.starting_time + (i / len(self.poses)) * self.record_len_in_sec
+                    self.pose_dict[str(time)] = 1
+                prev_pose = 1
+
+            elif self.stage_array[i] == 2:
+                if prev_pose != 2:
+                    time = self.starting_time + (i / len(self.poses)) * self.record_len_in_sec
+                    self.pose_dict[str(time)] = 2
+                prev_pose = 2
+        self.pose_dict[str(self.starting_time + self.record_len_in_sec)] = 'END'
+        return self.pose_dict
 
     def _calc_sleep_stage(self):
         epoch_len = self.epoch_len
@@ -122,6 +148,7 @@ class SleepAnalyzer_v1:
             results["scores"] = scores
 
             results["stages"] = self.stage_dict
+            results["poses"] = self.pose_dict
 
             return results
 

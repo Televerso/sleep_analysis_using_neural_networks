@@ -56,6 +56,7 @@ class MainController(QObject):
         try:
             qt_image, info_dict = self.model.generate_preview(file_path)
             self.view.update_preview(qt_image, info_dict)
+            self.model.preview_image = qt_image
             self.model.video_path = file_path
             self.view.set_ui_state(UIState.DEFAULT)
         except Exception as e:
@@ -147,17 +148,28 @@ class MainController(QObject):
 
 
     def _language_updated(self, new_lang, window_persisting):
-        i18n.load_translation(new_lang)
-        self.view.update_gui_translations()
-        self.model.curr_lang = new_lang
+        try:
+            i18n.load_translation(new_lang)
+            self.view.update_gui_translations()
 
-        if window_persisting:
-            # Instead of updating each label and every tab we just close and reopen the window
-            self.settings_view.close()
+            if self.model.preview_image is None:
+                self.view.preview_label.setText(_("Preview"))
 
-            self.settings_view = ConfigView(self.model.read_config(), parent=self.view)
-            self.settings_view.settings_changed.connect(self._on_settings_saved)
-            self.settings_view.exec()
+            if self.model.results is not None:
+                self.view.results_panel.set_poses(self.model.results["poses"])
+                self.view.results_panel.set_stages(self.model.results["stages"])
+
+            self.model.curr_lang = new_lang
+
+            if window_persisting:
+                # Instead of updating each label and every tab we just close and reopen the window
+                self.settings_view.close()
+
+                self.settings_view = ConfigView(self.model.read_config(), parent=self.view)
+                self.settings_view.settings_changed.connect(self._on_settings_saved)
+                self.settings_view.exec()
+        except Exception as e:
+            self.show_exeption(e)
 
 
 

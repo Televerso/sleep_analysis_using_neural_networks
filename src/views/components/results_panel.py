@@ -51,7 +51,7 @@ class ResultsPanel(QWidget):
         self.pose_table.wheelEvent = lambda event: event.ignore()
         table_space_layout.addWidget(self.pose_table)
 
-        # Pose table
+        # Stage table
         self.stage_table = QTableWidget()
         self.stage_table.setColumnCount(2)
         self.stage_table.setRowCount(10)

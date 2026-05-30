@@ -235,7 +235,7 @@ class MainWindow(QWidget):
         self.video_file_label.setText(_("Video file: "))
         self.file_path_input.setPlaceholderText(_("Select input video file"))
         self.browse_button.setText(_("Browse"))
-        self.preview_label.setText(_("Preview"))
+
         self.preview_param_table.setVerticalHeaderLabels((_('fps'), _('duration'), _('time start'), _('time end')))
         self.start_button.setText(_("Start"))
         self.cancel_button.setText(_("Cancel"))
@@ -243,6 +243,8 @@ class MainWindow(QWidget):
         self.export_button.setText(_("Export"))
 
         self.results_panel.params_table.setVerticalHeaderLabels([_("Parameter"), _("Value")])
+        self.results_panel.stage_table.setHorizontalHeaderLabels([_("Time"), _("Stage")])
+        self.results_panel.pose_table.setHorizontalHeaderLabels([_("Time"), _("Pose")])
 
         if self.__state == UIState.DEFAULT:
             self.progress_label.setText(_("Progress"))

@@ -13,7 +13,7 @@ sleep_analyzer:
 sleep_net_weights:
   path_to_weights: C:/Users/dboga/PycharmProjects/sleep_analysis_using_neural_networks/data/models/SleepNet/SleepNet_v6.pth
 system_settings:
-  language: Russian
+  language: English
 vibe_motion_detector:
   N: 20
   R: 40

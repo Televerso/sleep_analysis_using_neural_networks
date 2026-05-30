@@ -9,6 +9,7 @@ class MainModel(QObject):
     def __init__(self):
         super().__init__()
         self.video_path = None
+        self.preview_image = None
         self.config_path = None
         self.results = None
         self.curr_lang = None

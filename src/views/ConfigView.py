@@ -1,3 +1,6 @@
+import os
+
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QFormLayout,
     QTabWidget, QWidget, QSpinBox, QDoubleSpinBox,
@@ -19,6 +22,8 @@ class ConfigView(QDialog):
         super().__init__(parent)
 
         self.setWindowTitle(_("Settings"))
+        icon_path = os.path.join(get_root_path(), "resources", "icons", "settings.ico")
+        self.setWindowIcon(QIcon(icon_path))
         self.setMinimumSize(600, 400)
         self._config = curr_config.copy()
 

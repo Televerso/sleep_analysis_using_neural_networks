@@ -1,7 +1,12 @@
+import os
+
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QPushButton, QLabel,
     QVBoxLayout, QDialog
 )
+
+from src.utils.file_functions.get_root_path import get_root_path
 from src.utils.trenslation_manager.translation_manager import _
 
 class ErrorWindow(QDialog):
@@ -9,6 +14,8 @@ class ErrorWindow(QDialog):
         super().__init__(parent)
 
         self.setWindowTitle(_("Error"))
+        icon_path = os.path.join(get_root_path(), "resources", "icons", "error.ico")
+        self.setWindowIcon(QIcon(icon_path))
         self.setMinimumSize(300, 200)
 
         layout = QVBoxLayout()

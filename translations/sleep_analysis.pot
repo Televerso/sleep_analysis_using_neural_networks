@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-05-30 18:27+0400\n"
+"POT-Creation-Date: 2026-05-30 22:55+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,7 +191,7 @@ msgid "Sleep Ap: "
 msgstr ""
 
 #: ../../src/views/ConfigView.py:178
-msgid "Optimal number ow awakings"
+msgid "Optimal number of awakings"
 msgstr ""
 
 #: ../../src/views/ConfigView.py:179
@@ -235,31 +235,35 @@ msgid "Russian"
 msgstr ""
 
 #: ../../src/views/ConfigView.py:209
-msgid "Language selector"
+msgid "English (UK)"
 msgstr ""
 
 #: ../../src/views/ConfigView.py:210
+msgid "Language selector"
+msgstr ""
+
+#: ../../src/views/ConfigView.py:211
 msgid "Language selector: "
 msgstr ""
 
-#: ../../src/views/ConfigView.py:212
+#: ../../src/views/ConfigView.py:213
 msgid "System Settings"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:221
+#: ../../src/views/ConfigView.py:222
 msgid "Ok"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:223 ../../src/views/MainWindow.py:106
+#: ../../src/views/ConfigView.py:224 ../../src/views/MainWindow.py:106
 #: ../../src/views/MainWindow.py:241
 msgid "Cancel"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:225
+#: ../../src/views/ConfigView.py:226
 msgid "Apply"
 msgstr ""
 
-#: ../../src/views/ConfigView.py:317
+#: ../../src/views/ConfigView.py:318
 msgid "Open weights file"
 msgstr ""
 

@@ -1,7 +1,7 @@
 
 
-languages = ["English", "Russian"]
-lang_codes = ["en_US", "ru_RU"]
+languages = ["English", "Russian", "English (UK)"]
+lang_codes = ["en_US", "ru_RU", "en_GB"]
 
 def language_to_code(language):
     if language in languages:

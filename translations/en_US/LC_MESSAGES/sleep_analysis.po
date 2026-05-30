@@ -1,4 +1,4 @@
-# Russian (Russia) translations for PROJECT.
+# English (United States) translations for PROJECT.
 # Copyright (C) 2026 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
@@ -10,10 +10,9 @@ msgstr ""
 "POT-Creation-Date: 2026-05-30 22:55+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: ru_RU\n"
-"Language-Team: ru_RU <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: en_US\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,47 +20,47 @@ msgstr ""
 
 #: ../../src/controllers/MainController.py:71
 msgid "No file selected"
-msgstr "Файл не выбран"
+msgstr "No file selected"
 
 #: ../../src/controllers/MainController.py:109
 msgid "Cancelled"
-msgstr "Отменено"
+msgstr "Cancelled"
 
 #: ../../src/models/video_processor.py:44
 msgid "Loading configs"
-msgstr "Загрузка конфигураций"
+msgstr "Loading configs"
 
 #: ../../src/models/video_processor.py:58
 msgid "Loading video"
-msgstr "Чтение видеофайла"
+msgstr "Loading video"
 
 #: ../../src/models/video_processor.py:74
 msgid "Analyzing presence"
-msgstr "Анализ присутствия"
+msgstr "Analyzing presence"
 
 #: ../../src/models/video_processor.py:84
 msgid "Analyzing movement intensity"
-msgstr "Обнаружение движений"
+msgstr "Analyzing movement intensity"
 
 #: ../../src/models/video_processor.py:102
 msgid "Analyzing poses"
-msgstr "Анализ поз"
+msgstr "Analyzing poses"
 
 #: ../../src/models/video_processor.py:129
 msgid "Calculating results"
-msgstr "Вычисление результатов"
+msgstr "Calculating results"
 
 #: ../../src/models/video_processor.py:152
 msgid "Done!"
-msgstr "Готово!"
+msgstr "Done!"
 
 #: ../../src/views/ConfigView.py:21
 msgid "Settings"
-msgstr "Настройки"
+msgstr "Settings"
 
 #: ../../src/views/ConfigView.py:38
 msgid "Target fps to process"
-msgstr "Целевое значение fps"
+msgstr "Target fps to process"
 
 #: ../../src/views/ConfigView.py:39
 msgid "FPS: "
@@ -69,225 +68,225 @@ msgstr "FPS: "
 
 #: ../../src/views/ConfigView.py:44
 msgid "Width of the processed video"
-msgstr "Целевое значение ширины видео"
+msgstr "Width of the processed video"
 
 #: ../../src/views/ConfigView.py:45
 msgid "Width: "
-msgstr "Ширина: "
+msgstr "Width: "
 
 #: ../../src/views/ConfigView.py:50
 msgid "Height of the processed video"
-msgstr "Целевое значение высоты видео"
+msgstr "Height of the processed video"
 
 #: ../../src/views/ConfigView.py:51
 msgid "Height: "
-msgstr "Высота: "
+msgstr "Height: "
 
 #: ../../src/views/ConfigView.py:76
 msgid "Rotate: "
-msgstr "Поворот: "
+msgstr "Rotate: "
 
 #: ../../src/views/ConfigView.py:78
 msgid "Video Processing"
-msgstr "Обработка видео"
+msgstr "Video Processing"
 
 #: ../../src/views/ConfigView.py:87
 msgid "Number of samples per pixel"
-msgstr "Количество образцов на пиксель"
+msgstr "Number of samples per pixel"
 
 #: ../../src/views/ConfigView.py:88
 msgid "ViBE Samples (N): "
-msgstr "Параметр N: "
+msgstr "ViBE Samples (N): "
 
 #: ../../src/views/ConfigView.py:93
 msgid "Radius threshold for pixel matching"
-msgstr "Радиус сферы для обработки"
+msgstr "Radius threshold for pixel matching"
 
 #: ../../src/views/ConfigView.py:94
 msgid "ViBE Radius (R): "
-msgstr "Параметр R: "
+msgstr "ViBE Radius (R): "
 
 #: ../../src/views/ConfigView.py:99
 msgid "Minimum matches for background classification"
-msgstr "Минимальное количество совпадений фона"
+msgstr "Minimum matches for background classification"
 
 #: ../../src/views/ConfigView.py:100
 msgid "ViBE Min (#min): "
-msgstr "Параметр #min: "
+msgstr "ViBE Min (#min): "
 
 #: ../../src/views/ConfigView.py:105
 msgid "1/phi chance to update the background"
-msgstr "Шанс обновления фона 1/phi"
+msgstr "1/phi chance to update the background"
 
 #: ../../src/views/ConfigView.py:106
 msgid "ViBE Phi (phi): "
-msgstr "Параметр phi: "
+msgstr "ViBE Phi (phi): "
 
 #: ../../src/views/ConfigView.py:108
 msgid "Motion Processing"
-msgstr "Обнаружение движений"
+msgstr "Motion Processing"
 
 #: ../../src/views/ConfigView.py:117
 msgid "Threshold for background classification"
-msgstr "Пороговое значения для отнесения пикселя к фону"
+msgstr "Threshold for background classification"
 
 #: ../../src/views/ConfigView.py:118
 msgid "Background Threshold: "
-msgstr "Пороговое значение фона: "
+msgstr "Background Threshold: "
 
 #: ../../src/views/ConfigView.py:120
 msgid "Background Processing"
-msgstr "Обработка фона"
+msgstr "Background Processing"
 
 #: ../../src/views/ConfigView.py:127 ../../src/views/MainWindow.py:66
 #: ../../src/views/MainWindow.py:237
 msgid "Browse"
-msgstr "Обзор"
+msgstr "Browse"
 
 #: ../../src/views/ConfigView.py:132
 msgid "Model weights: "
-msgstr "Веса модели: "
+msgstr "Model weights: "
 
 #: ../../src/views/ConfigView.py:137
 msgid "CNN layout"
-msgstr "Веса модели"
+msgstr "CNN layout"
 
 #: ../../src/views/ConfigView.py:146
 msgid "Length of the epoch"
-msgstr "Длина одной эпохи"
+msgstr "Length of the epoch"
 
 #: ../../src/views/ConfigView.py:147
 msgid "Epoch Length: "
-msgstr "Длина эпохи: "
+msgstr "Epoch Length: "
 
 #: ../../src/views/ConfigView.py:153
 msgid "Threshold for detecting the sleep movement"
-msgstr "Пороговое значение для обнаружения движения"
+msgstr "Threshold for detecting the sleep movement"
 
 #: ../../src/views/ConfigView.py:154
 msgid "Sleep Movement Threshold: "
-msgstr "Пороговое значение движения: "
+msgstr "Sleep Movement Threshold: "
 
 #: ../../src/views/ConfigView.py:160
 msgid "Threshold for detecting the wake state"
-msgstr "Пороговое значение для обнаружения пробуждения"
+msgstr "Threshold for detecting the wake state"
 
 #: ../../src/views/ConfigView.py:161
 msgid "Awake Threshold: "
-msgstr "Пороговое значение пробуждения: "
+msgstr "Awake Threshold: "
 
 #: ../../src/views/ConfigView.py:166
 msgid "Optimal sleep duration"
-msgstr "Оптимальная продолжительность сна"
+msgstr "Optimal sleep duration"
 
 #: ../../src/views/ConfigView.py:167
 msgid "Sleep Am: "
-msgstr "Параметр Am: "
+msgstr "Sleep Am: "
 
 #: ../../src/views/ConfigView.py:172
 msgid "Personolized sleep duration"
-msgstr "Персональная продолжительность сна"
+msgstr "Personolized sleep duration"
 
 #: ../../src/views/ConfigView.py:173
 msgid "Sleep Ap: "
-msgstr "Параметр Ap: "
+msgstr "Sleep Ap: "
 
 #: ../../src/views/ConfigView.py:178
 msgid "Optimal number of awakings"
-msgstr "Оптимальное количество пробуждений"
+msgstr "Optimal number of awakings"
 
 #: ../../src/views/ConfigView.py:179
 msgid "Sleep Aw: "
-msgstr "Параметр Aw: "
+msgstr "Sleep Aw: "
 
 #: ../../src/views/ConfigView.py:184
 msgid "Alpha coefficient"
-msgstr "Коэффициент оценки альфа"
+msgstr "Alpha coefficient"
 
 #: ../../src/views/ConfigView.py:185
 msgid "Sleep Alpha: "
-msgstr "Параметр alpha: "
+msgstr "Sleep Alpha: "
 
 #: ../../src/views/ConfigView.py:190
 msgid "Beta coefficient"
-msgstr "Коэффициент оценки бета"
+msgstr "Beta coefficient"
 
 #: ../../src/views/ConfigView.py:191
 msgid "Sleep Beta: "
-msgstr "Параметр beta: "
+msgstr "Sleep Beta: "
 
 #: ../../src/views/ConfigView.py:196
 msgid "Gamma coefficient"
-msgstr "Коэффициент оценки гамма"
+msgstr "Gamma coefficient"
 
 #: ../../src/views/ConfigView.py:197
 msgid "Sleep Gamma: "
-msgstr "Параметр gamma: "
+msgstr "Sleep Gamma: "
 
 #: ../../src/views/ConfigView.py:199
 msgid "Sleep Analysis"
-msgstr "Анализ сна"
+msgstr "Sleep Analysis"
 
 #: ../../src/views/ConfigView.py:207
 msgid "English"
-msgstr "Английский (США)"
+msgstr "English (US)"
 
 #: ../../src/views/ConfigView.py:208
 msgid "Russian"
-msgstr "Русский"
+msgstr "Russian"
 
 #: ../../src/views/ConfigView.py:209
 msgid "English (UK)"
-msgstr "Английский (Соединенное Королевство)"
+msgstr "English (UK)"
 
 #: ../../src/views/ConfigView.py:210
 msgid "Language selector"
-msgstr "Выбор языка"
+msgstr "Language selector"
 
 #: ../../src/views/ConfigView.py:211
 msgid "Language selector: "
-msgstr "Выбор языка: "
+msgstr "Language selector: "
 
 #: ../../src/views/ConfigView.py:213
 msgid "System Settings"
-msgstr "Системные настройки"
+msgstr "System Settings"
 
 #: ../../src/views/ConfigView.py:222
 msgid "Ok"
-msgstr "ОК"
+msgstr "Ok"
 
 #: ../../src/views/ConfigView.py:224 ../../src/views/MainWindow.py:106
 #: ../../src/views/MainWindow.py:241
 msgid "Cancel"
-msgstr "Отмена"
+msgstr "Cancel"
 
 #: ../../src/views/ConfigView.py:226
 msgid "Apply"
-msgstr "Принять"
+msgstr "Apply"
 
 #: ../../src/views/ConfigView.py:318
 msgid "Open weights file"
-msgstr "Открыть файл с весами модели"
+msgstr "Open weights file"
 
 #: ../../src/views/ErrorWindow.py:11 ../../src/views/MainWindow.py:226
 msgid "Error"
-msgstr "Ошибка"
+msgstr "Error"
 
 #: ../../src/views/MainWindow.py:40 ../../src/views/MainWindow.py:234
 msgid "Sleep Analysis Using Neural Networks"
-msgstr "Анализ сна с использованием искуственных нейронных сетей"
+msgstr "Sleep Analysis Using Neural Networks"
 
 #: ../../src/views/MainWindow.py:56 ../../src/views/MainWindow.py:235
 msgid "Video file: "
-msgstr "Файл с видео: "
+msgstr "Video file: "
 
 #: ../../src/views/MainWindow.py:61 ../../src/views/MainWindow.py:236
 msgid "Select input video file"
-msgstr "Выберите видео файл"
+msgstr "Select input video file"
 
 #: ../../src/views/MainWindow.py:88 ../../src/views/MainWindow.py:238
 msgid "Preview"
-msgstr "Предпросмотр"
+msgstr "Preview"
 
 #: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "fps"
@@ -295,106 +294,106 @@ msgstr "fps"
 
 #: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "duration"
-msgstr "длительность"
+msgstr "duration"
 
 #: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "time start"
-msgstr "время начала"
+msgstr "time start"
 
 #: ../../src/views/MainWindow.py:97 ../../src/views/MainWindow.py:239
 msgid "time end"
-msgstr "время конца"
+msgstr "time end"
 
 #: ../../src/views/MainWindow.py:102 ../../src/views/MainWindow.py:240
 msgid "Start"
-msgstr "Начать обработку"
+msgstr "Start"
 
 #: ../../src/views/MainWindow.py:110 ../../src/views/MainWindow.py:242
 msgid "Config"
-msgstr "Настройки"
+msgstr "Config"
 
 #: ../../src/views/MainWindow.py:119 ../../src/views/MainWindow.py:248
 msgid "Progress"
-msgstr "Выполнение"
+msgstr "Progress"
 
 #: ../../src/views/MainWindow.py:127 ../../src/views/MainWindow.py:243
 msgid "Export"
-msgstr "Экспорт"
+msgstr "Export"
 
 #: ../../src/views/MainWindow.py:140
 msgid "Select video file"
-msgstr "Выберите видео файл"
+msgstr "Select video file"
 
 #: ../../src/views/MainWindow.py:152
 msgid "Cancelling..."
-msgstr "Отмена..."
+msgstr "Cancelling..."
 
 #: ../../src/views/MainWindow.py:215
 msgid "Exporting"
-msgstr "Экспорт..."
+msgstr "Exporting"
 
 #: ../../src/views/MainWindow.py:245
 #: ../../src/views/components/results_panel.py:24
 msgid "Parameter"
-msgstr "Параметр"
+msgstr "Parameter"
 
 #: ../../src/views/MainWindow.py:245
 #: ../../src/views/components/results_panel.py:24
 msgid "Value"
-msgstr "Значение"
+msgstr "Value"
 
 #: ../../src/views/MainWindow.py:249
 msgid "Scores"
-msgstr "Оценки"
+msgstr "Scores"
 
 #: ../../src/views/components/results_panel.py:33
 msgid "No results yet"
-msgstr "Результаты пока не получены"
+msgstr "No results yet"
 
 #: ../../src/views/components/results_panel.py:47
 #: ../../src/views/components/results_panel.py:58
 msgid "Time"
-msgstr "Время"
+msgstr "Time"
 
 #: ../../src/views/components/results_panel.py:47
 msgid "Pose"
-msgstr "Поза"
+msgstr "Pose"
 
 #: ../../src/views/components/results_panel.py:58
 msgid "Stage"
-msgstr "Фаза сна"
+msgstr "Stage"
 
 #: ../../src/views/components/results_panel.py:102
 msgid "awake"
-msgstr "бодрствование"
+msgstr "awake"
 
 #: ../../src/views/components/results_panel.py:102
 msgid "REM stage"
-msgstr "фаза REM сна"
+msgstr "REM stage"
 
 #: ../../src/views/components/results_panel.py:102
 msgid "NREM stages"
-msgstr "фазы NREM сна"
+msgstr "NREM stages"
 
 #: ../../src/views/components/results_panel.py:102
 #: ../../src/views/components/results_panel.py:116
 msgid "start"
-msgstr "начало"
+msgstr "start"
 
 #: ../../src/views/components/results_panel.py:102
 #: ../../src/views/components/results_panel.py:116
 msgid "end"
-msgstr "конец"
+msgstr "end"
 
 #: ../../src/views/components/results_panel.py:116
 msgid "left log"
-msgstr "на левом боку"
+msgstr "left log"
 
 #: ../../src/views/components/results_panel.py:116
 msgid "right log"
-msgstr "на правом боку"
+msgstr "right log"
 
 #: ../../src/views/components/results_panel.py:116
 msgid "supine"
-msgstr "на спине"
+msgstr "supine"
 

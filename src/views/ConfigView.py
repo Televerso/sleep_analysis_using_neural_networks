@@ -175,7 +175,7 @@ class ConfigView(QDialog):
         self.sleep_Aw = QSpinBox()
         self.sleep_Aw.setRange(0, 12)
         self.sleep_Aw.setSingleStep(1)
-        self.sleep_Aw.setToolTip(_("Optimal number ow awakings"))
+        self.sleep_Aw.setToolTip(_("Optimal number of awakings"))
         sleep_analyzer_layout.addRow(_('Sleep Aw: '), self.sleep_Aw)
 
         self.sleep_alpha = QDoubleSpinBox()
@@ -206,6 +206,7 @@ class ConfigView(QDialog):
         self.lang_locale = QComboBox()
         self.lang_locale.addItem(_('English'))
         self.lang_locale.addItem(_('Russian'))
+        self.lang_locale.addItem(_('English (UK)'))
         self.lang_locale.setToolTip(_("Language selector"))
         system_settings_layout.addRow(_('Language selector: '), self.lang_locale)
 
